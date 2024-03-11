@@ -1,12 +1,12 @@
-package de.timbachmann.repository
+package de.timbachmann.api.repository
 
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import de.timbachmann.model.entity.MultimediaObject
-import de.timbachmann.repository.interfaces.MultimediaObjectRepositoryInterface
+import de.timbachmann.api.model.entity.MultimediaObject
+import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import kotlinx.coroutines.flow.firstOrNull
 import org.bson.BsonValue
 import org.bson.types.ObjectId

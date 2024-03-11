@@ -1,4 +1,4 @@
-package de.timbachmann.model.response
+package de.timbachmann.api.model.response
 
 
 data class TourResponse(

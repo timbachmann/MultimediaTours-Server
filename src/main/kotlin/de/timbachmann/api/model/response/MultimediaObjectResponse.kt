@@ -1,7 +1,7 @@
-package de.timbachmann.model.response
+package de.timbachmann.api.model.response
 
-import de.timbachmann.model.entity.MultimediaObjectPosition
-import de.timbachmann.model.entity.MultimediaType
+import de.timbachmann.api.model.entity.MultimediaObjectPosition
+import de.timbachmann.api.model.entity.MultimediaType
 
 
 data class MultimediaObjectResponse(

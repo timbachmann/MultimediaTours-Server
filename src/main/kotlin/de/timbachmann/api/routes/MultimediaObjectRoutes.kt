@@ -1,7 +1,8 @@
-package de.timbachmann.routes
+package de.timbachmann.api.routes
 
-import de.timbachmann.model.request.TourRequest
-import de.timbachmann.repository.interfaces.TourRepositoryInterface
+
+import de.timbachmann.api.model.request.MultimediaObjectRequest
+import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -10,27 +11,25 @@ import io.ktor.server.routing.*
 import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
 
-fun Route.tourRouting() {
-
-    val repository by inject<TourRepositoryInterface>()
-
-    route("/tour") {
+fun Route.multimediaObjectRouting() {
+    val repository by inject<MultimediaObjectRepositoryInterface>()
+    route("/multimediaObject") {
         post {
-            val newTour = call.receive<TourRequest>()
-            val insertedId = repository.insertOne(newTour.toTourObject())
-            call.respond(HttpStatusCode.Created, "Created tour with id $insertedId")
+            val newObject = call.receive<MultimediaObjectRequest>()
+            val insertedId = repository.insertOne(newObject.toMultimediaObject())
+            call.respond(HttpStatusCode.Created, "Created multimediaObject with id $insertedId")
         }
 
         delete("/{id?}") {
             val id = call.parameters["id"] ?: return@delete call.respondText(
-                text = "Missing tour id",
+                text = "Missing multimediaObject id",
                 status = HttpStatusCode.BadRequest
             )
             val delete: Long = repository.deleteById(ObjectId(id))
             if (delete == 1L) {
-                return@delete call.respondText("Tour Deleted successfully", status = HttpStatusCode.OK)
+                return@delete call.respondText("MultimediaObject Deleted successfully", status = HttpStatusCode.OK)
             }
-            return@delete call.respondText("Tour not found", status = HttpStatusCode.NotFound)
+            return@delete call.respondText("MultimediaObject not found", status = HttpStatusCode.NotFound)
         }
 
         get("/{id?}") {
@@ -48,12 +47,12 @@ fun Route.tourRouting() {
 
         patch("/{id?}") {
             val id = call.parameters["id"] ?: return@patch call.respondText(
-                text = "Missing tour id",
+                text = "Missing multimediaObject id",
                 status = HttpStatusCode.BadRequest
             )
             val updated = repository.updateOne(ObjectId(id), call.receive())
             call.respondText(
-                text = if (updated == 1L) "Tour updated successfully" else "Tour not found",
+                text = if (updated == 1L) "MultimediaObject updated successfully" else "MultimediaObject not found",
                 status = if (updated == 1L) HttpStatusCode.OK else HttpStatusCode.NotFound
             )
         }

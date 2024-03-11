@@ -1,6 +1,6 @@
-package de.timbachmann.repository.interfaces
+package de.timbachmann.api.repository.interfaces
 
-import de.timbachmann.model.entity.MultimediaObject
+import de.timbachmann.api.model.entity.MultimediaObject
 import org.bson.BsonValue
 import org.bson.types.ObjectId
 

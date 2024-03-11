@@ -1,10 +1,10 @@
 package de.timbachmann.plugins
 
 import com.mongodb.kotlin.client.coroutine.MongoClient
-import de.timbachmann.repository.MultimediaObjectRepository
-import de.timbachmann.repository.TourRepository
-import de.timbachmann.repository.interfaces.MultimediaObjectRepositoryInterface
-import de.timbachmann.repository.interfaces.TourRepositoryInterface
+import de.timbachmann.api.repository.MultimediaObjectRepository
+import de.timbachmann.api.repository.TourRepository
+import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
+import de.timbachmann.api.repository.interfaces.TourRepositoryInterface
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin

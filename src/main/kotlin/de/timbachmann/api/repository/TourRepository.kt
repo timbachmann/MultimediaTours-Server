@@ -1,14 +1,15 @@
-package de.timbachmann.repository
+package de.timbachmann.api.repository
 
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import de.timbachmann.model.entity.MultimediaObject
-import de.timbachmann.model.entity.Tour
-import de.timbachmann.repository.interfaces.TourRepositoryInterface
+import de.timbachmann.api.model.entity.MultimediaObject
+import de.timbachmann.api.model.entity.Tour
+import de.timbachmann.api.repository.interfaces.TourRepositoryInterface
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import org.bson.BsonValue
 import org.bson.types.ObjectId
 
@@ -39,6 +40,10 @@ class TourRepository(private val mongoDatabase: MongoDatabase) : TourRepositoryI
         }
         return 0
     }
+
+    override suspend fun getAll(): List<Tour> =
+        mongoDatabase.getCollection<Tour>(TOUR_COLLECTION).withDocumentClass<Tour>()
+            .find().toList()
 
     override suspend fun findById(objectId: ObjectId): Tour? =
         mongoDatabase.getCollection<Tour>(TOUR_COLLECTION).withDocumentClass<Tour>()

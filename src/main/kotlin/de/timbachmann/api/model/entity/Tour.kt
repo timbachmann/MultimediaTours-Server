@@ -1,6 +1,6 @@
-package de.timbachmann.model.entity
+package de.timbachmann.api.model.entity
 
-import de.timbachmann.model.response.TourResponse
+import de.timbachmann.api.model.response.TourResponse
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 

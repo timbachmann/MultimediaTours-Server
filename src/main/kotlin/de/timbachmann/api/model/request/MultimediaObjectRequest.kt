@@ -1,8 +1,8 @@
-package de.timbachmann.model.request
+package de.timbachmann.api.model.request
 
-import de.timbachmann.model.entity.MultimediaObject
-import de.timbachmann.model.entity.MultimediaObjectPosition
-import de.timbachmann.model.entity.MultimediaType
+import de.timbachmann.api.model.entity.MultimediaObject
+import de.timbachmann.api.model.entity.MultimediaObjectPosition
+import de.timbachmann.api.model.entity.MultimediaType
 import org.bson.types.ObjectId
 
 

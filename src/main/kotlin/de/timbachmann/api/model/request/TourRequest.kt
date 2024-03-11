@@ -1,6 +1,6 @@
-package de.timbachmann.model.request
+package de.timbachmann.api.model.request
 
-import de.timbachmann.model.entity.Tour
+import de.timbachmann.api.model.entity.Tour
 import org.bson.types.ObjectId
 
 data class TourRequest(

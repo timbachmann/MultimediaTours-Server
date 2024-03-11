@@ -1,7 +1,7 @@
 package de.timbachmann.plugins
 
-import de.timbachmann.routes.multimediaObjectRouting
-import de.timbachmann.routes.tourRouting
+import de.timbachmann.api.routes.multimediaObjectRouting
+import de.timbachmann.api.routes.tourRouting
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
