@@ -1,0 +1,267 @@
+openapi: "3.0.3"
+info:
+  title: "Multimedia Tours API"
+  description: "Multimedia Tours API"
+  version: "1.0.0"
+servers:
+  - url: "http://127.0.0.1:8080"
+paths:
+  /multimediaObject:
+    post:
+      summary: Create a new multimediaObject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultimediaObjectRequest'
+      responses:
+        '201':
+          description: MultimediaObject created successfully
+        '400':
+          description: Bad request
+      tags:
+        - Multimedia Object
+  /multimediaObject/{id}:
+    get:
+      summary: Retrieve a MultimediaObject by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: MultimediaObject not found
+      tags:
+        - Multimedia Object
+    delete:
+      summary: Delete MultimediaObject by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: MultimediaObject deleted successfully
+        '400':
+          description: Bad request
+        '404':
+          description: MultimediaObject not found
+      tags:
+        - Multimedia Object
+    patch:
+      summary: Update MultimediaObject by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultimediaObjectRequest'
+      responses:
+        '200':
+          description: MultimediaObject updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: MultimediaObject not found
+      tags:
+        - Multimedia Object
+
+  /tour:
+    post:
+      summary: Create a new tour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourRequest'
+      responses:
+        '201':
+          description: Tour created successfully
+        '400':
+          description: Bad request
+      tags:
+        - Tour
+  /tour/{id}:
+    get:
+      summary: Retrieve a Tour by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: Tour not found
+      tags:
+        - Tour
+    delete:
+      summary: Delete Tour by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tour deleted successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Tour not found
+      tags:
+        - Tour
+    patch:
+      summary: Update Tour by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourRequest'
+      responses:
+        '200':
+          description: Tour updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Tour not found
+      tags:
+        - Tour
+components:
+  schemas:
+    MultimediaObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [ IMAGE, VIDEO, TEXT, AUDIO, MULTIDIMENSIONAL ]
+        data:
+          type: string
+        title:
+          type: string
+        date:
+          type: string
+        source:
+          type: string
+        position:
+          $ref: '#/components/schemas/MultimediaObjectPosition'
+        author:
+          type: string
+      required:
+        - id
+        - type
+        - data
+
+    MultimediaObjectPosition:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lng:
+          type: number
+          format: double
+        bearing:
+          type: integer
+          format: int32
+        yaw:
+          type: number
+          format: float
+      required:
+        - lat
+        - lng
+
+    MultimediaObjectRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [ IMAGE, VIDEO, TEXT, AUDIO, MULTIDIMENSIONAL ]
+        title:
+          type: string
+        date:
+          type: string
+        source:
+          type: string
+        position:
+          $ref: '#/components/schemas/MultimediaObjectPosition'
+        data:
+          type: string
+        author:
+          type: string
+      required:
+        - id
+        - type
+        - data
+
+    Tour:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        source:
+          type: string
+        multimediaObjects:
+          type: array
+        author:
+          type: string
+      required:
+        - id
+        - title
+        - multimediaObjects
+
+    TourRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        source:
+          type: string
+        multimediaObjects:
+          type: array
+        author:
+          type: string
+      required:
+        - id
+        - title
+        - multimediaObjects

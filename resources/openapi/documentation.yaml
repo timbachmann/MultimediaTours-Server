@@ -1,0 +1,8 @@
+openapi: "3.0.3"
+info:
+  title: "masterproject_server API"
+  description: "masterproject_server API"
+  version: "1.0.0"
+servers:
+- url: "https://masterproject_server"
+paths: {}
