@@ -4,9 +4,9 @@ info:
   description: "Multimedia Tours API"
   version: "1.0.0"
 servers:
-  - url: "http://127.0.0.1:8080"
+  - url: "http://127.0.0.1:8090"
 paths:
-  /multimediaObject:
+  /multimedia-objects:
     post:
       summary: Create a new multimediaObject
       requestBody:
@@ -21,8 +21,20 @@ paths:
         '400':
           description: Bad request
       tags:
-        - Multimedia Object
-  /multimediaObject/{id}:
+        - Multimedia Objects
+    get:
+      summary: Retrieve all MultimediaObjects
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: MultimediaObjects not found
+      tags:
+        - Multimedia Objects
+  /multimedia-objects/{id}:
     get:
       summary: Retrieve a MultimediaObject by ID
       parameters:
@@ -40,7 +52,7 @@ paths:
         '404':
           description: MultimediaObject not found
       tags:
-        - Multimedia Object
+        - Multimedia Objects
     delete:
       summary: Delete MultimediaObject by ID
       parameters:
@@ -57,7 +69,7 @@ paths:
         '404':
           description: MultimediaObject not found
       tags:
-        - Multimedia Object
+        - Multimedia Objects
     patch:
       summary: Update MultimediaObject by ID
       parameters:
@@ -80,9 +92,9 @@ paths:
         '404':
           description: MultimediaObject not found
       tags:
-        - Multimedia Object
+        - Multimedia Objects
 
-  /tour:
+  /tours:
     post:
       summary: Create a new tour
       requestBody:
@@ -97,8 +109,20 @@ paths:
         '400':
           description: Bad request
       tags:
-        - Tour
-  /tour/{id}:
+        - Tours
+    get:
+      summary: Retrieve all Tours
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: Tours not found
+      tags:
+        - Tours
+  /tours/{id}:
     get:
       summary: Retrieve a Tour by ID
       parameters:
@@ -116,7 +140,7 @@ paths:
         '404':
           description: Tour not found
       tags:
-        - Tour
+        - Tours
     delete:
       summary: Delete Tour by ID
       parameters:
@@ -133,7 +157,7 @@ paths:
         '404':
           description: Tour not found
       tags:
-        - Tour
+        - Tours
     patch:
       summary: Update Tour by ID
       parameters:
@@ -156,7 +180,94 @@ paths:
         '404':
           description: Tour not found
       tags:
-        - Tour
+        - Tours
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Bad request
+      tags:
+        - Users
+    get:
+      summary: Retrieve all Users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: Users not found
+      tags:
+        - Users
+  /users/{id}:
+    get:
+      summary: Retrieve a User by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: User not found
+      tags:
+        - Users
+    delete:
+      summary: Delete User by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+      tags:
+        - Users
+    patch:
+      summary: Update User by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+      tags:
+        - Users
 components:
   schemas:
     MultimediaObject:
@@ -207,8 +318,6 @@ components:
     MultimediaObjectRequest:
       type: object
       properties:
-        id:
-          type: string
         type:
           type: string
           enum: [ IMAGE, VIDEO, TEXT, AUDIO, MULTIDIMENSIONAL ]
@@ -228,6 +337,27 @@ components:
         - id
         - type
         - data
+
+    MultimediaObjectResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [ IMAGE, VIDEO, TEXT, AUDIO, MULTIDIMENSIONAL ]
+        data:
+          type: string
+        title:
+          type: string
+        date:
+          type: string
+        source:
+          type: string
+        position:
+          $ref: '#/components/schemas/MultimediaObjectPosition'
+        author:
+          type: string
 
     Tour:
       type: object
@@ -251,8 +381,6 @@ components:
     TourRequest:
       type: object
       properties:
-        id:
-          type: string
         title:
           type: string
         source:
@@ -265,3 +393,74 @@ components:
         - id
         - title
         - multimediaObjects
+
+    TourResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        source:
+          type: string
+        multimediaObjects:
+          type: array
+        author:
+          type: string
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    LogoutRequest:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        password:
+          type: string
+        lastLogin:
+          type: string
+        activeSessions:
+          type: array
+        role:
+          type: string
+      required:
+        - id
+        - email
+        - password
+
+    UserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        lastLogin:
+          type: string
+        activeSessions:
+          type: array
+        role:
+          type: string
+      required:
+        - email
+        - password

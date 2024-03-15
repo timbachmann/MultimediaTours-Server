@@ -20,6 +20,7 @@ application {
 
 repositories {
     mavenCentral()
+    maven(url = "https://jitpack.io")
 }
 
 dependencies {
@@ -45,6 +46,9 @@ dependencies {
     // Koin
     implementation("io.insert-koin:koin-ktor:3.5.3")
     implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
+
+    implementation("org.mindrot:jbcrypt:0.4")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
 
     // Tests
     testImplementation("io.ktor:ktor-server-tests-jvm")

@@ -6,8 +6,10 @@ import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import de.timbachmann.api.model.entity.MultimediaObject
+import de.timbachmann.api.model.entity.User
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import org.bson.BsonValue
 import org.bson.types.ObjectId
 
@@ -38,6 +40,10 @@ class MultimediaObjectRepository(private val mongoDatabase: MongoDatabase) : Mul
         }
         return 0
     }
+
+    override suspend fun getAll(): List<MultimediaObject> =
+        mongoDatabase.getCollection<MultimediaObject>(MULTIMEDIAOBJECT_COLLECTION).withDocumentClass<MultimediaObject>()
+            .find().toList()
 
     override suspend fun findById(objectId: ObjectId): MultimediaObject? =
         mongoDatabase.getCollection<MultimediaObject>(MULTIMEDIAOBJECT_COLLECTION).withDocumentClass<MultimediaObject>()

@@ -4,7 +4,6 @@ import de.timbachmann.api.model.entity.Tour
 import org.bson.types.ObjectId
 
 data class TourRequest(
-    val id: String,
     val title: String,
     val source: String,
     val multimediaObjects: List<String>,

@@ -2,6 +2,7 @@ package de.timbachmann.plugins
 
 import de.timbachmann.api.routes.multimediaObjectRouting
 import de.timbachmann.api.routes.tourRouting
+import de.timbachmann.api.routes.userRouting
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -20,5 +21,6 @@ fun Application.configureRouting() {
         }
         multimediaObjectRouting()
         tourRouting()
+        userRouting()
     }
 }

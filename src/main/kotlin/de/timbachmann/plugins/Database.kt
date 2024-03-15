@@ -3,8 +3,10 @@ package de.timbachmann.plugins
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import de.timbachmann.api.repository.MultimediaObjectRepository
 import de.timbachmann.api.repository.TourRepository
+import de.timbachmann.api.repository.UserRepository
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import de.timbachmann.api.repository.interfaces.TourRepositoryInterface
+import de.timbachmann.api.repository.interfaces.UserRepositoryInterface
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
@@ -15,6 +17,7 @@ fun Application.configureDatabase() {
             module {
                 single<MultimediaObjectRepositoryInterface> { MultimediaObjectRepository(get()) }
                 single<TourRepositoryInterface> { TourRepository(get()) }
+                single<UserRepositoryInterface> { UserRepository(get(), application = this@configureDatabase) }
             },
             module {
                 single {

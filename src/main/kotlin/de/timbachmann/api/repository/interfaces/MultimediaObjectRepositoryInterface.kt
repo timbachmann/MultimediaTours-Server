@@ -8,5 +8,6 @@ interface MultimediaObjectRepositoryInterface {
     suspend fun insertOne(multimediaObject: MultimediaObject): BsonValue?
     suspend fun deleteById(objectId: ObjectId): Long
     suspend fun findById(objectId: ObjectId): MultimediaObject?
+    suspend fun getAll(): List<MultimediaObject>
     suspend fun updateOne(objectId: ObjectId, multimediaObject: MultimediaObject): Long
 }

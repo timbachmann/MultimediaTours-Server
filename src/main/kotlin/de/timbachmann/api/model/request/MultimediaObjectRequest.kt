@@ -7,7 +7,6 @@ import org.bson.types.ObjectId
 
 
 data class MultimediaObjectRequest(
-    val id: String,
     val type: MultimediaType,
     val title: String,
     val date: String,
