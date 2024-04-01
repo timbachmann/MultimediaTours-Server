@@ -28,19 +28,22 @@ fun Route.userRouting() {
         post {
             val user = call.receive<LoginRequest>()
             if (repository.findByEmail(email = user.email) !== null) {
-                call.respond(status = HttpStatusCode.Conflict,
+                call.respond(
+                    status = HttpStatusCode.Conflict,
                     message = "User already exists"
                 )
             }
             val passwordHash = repository.hashPassword(user.password)
-            repository.insertOne(User(
-                id = ObjectId(),
-                email = user.email,
-                password = passwordHash,
-                lastLogin = Date(0),
-                activeSessions = listOf(),
-                role = "ADMIN"
-            ))?.let {
+            repository.insertOne(
+                User(
+                    id = ObjectId(),
+                    email = user.email,
+                    password = passwordHash,
+                    lastLogin = Date(0),
+                    activeSessions = listOf(),
+                    role = "ADMIN"
+                )
+            )?.let {
                 call.respond(hashMapOf("id" to it.toString()))
             } ?: call.respond(HttpStatusCode.InternalServerError, "Could not register User")
 
@@ -48,7 +51,7 @@ fun Route.userRouting() {
 
         get {
             repository.getAll().let {
-                call.respond(it.map{obj -> obj.toResponse()})
+                call.respond(it.map { obj -> obj.toResponse() })
             }
         }
 
@@ -122,27 +125,102 @@ fun Route.userRouting() {
             }
             val csrf = RandomStringUtils.random(20, 0, 0, true, true, null, SecureRandom());
 
-            var activeSessions = user.activeSessions.filter{ it.validTo > Date() }
-            activeSessions = activeSessions.plus(UserSession(token = token!!, CSRF = csrf, validTo = Date.from(Instant.now().plus(7, ChronoUnit.DAYS))))
+            var activeSessions = user.activeSessions.filter { it.validTo > Date() }
+            activeSessions = activeSessions.plus(
+                UserSession(
+                    token = token!!,
+                    CSRF = csrf,
+                    validTo = Date.from(Instant.now().plus(7, ChronoUnit.DAYS))
+                )
+            )
 
-            repository.updateOne(user.id, User(
-                user.id, user.email, user.password, Date(), activeSessions, user.role
-            ))
+            repository.updateOne(
+                user.id, User(
+                    user.id, user.email, user.password, Date(), activeSessions, user.role
+                )
+            )
 
-            call.respond(HttpStatusCode.OK, LoginResponse(token!!, UserLoginResponse(user.id.toString(), user.email, csrf)))
+            call.respond(
+                HttpStatusCode.OK,
+                LoginResponse(token, UserLoginResponse(user.id.toString(), user.email, csrf))
+            )
         }
 
         post("/auth/logout") {
             val request = call.receive<LogoutRequest>()
             repository.findById(ObjectId(request.id))?.let {
                 val accessToken = call.request.header(HttpHeaders.Authorization)?.split(" ")?.get(1)
-                val activeSessions = it.activeSessions.filter{ session -> session.token !== accessToken }
-                repository.updateOne(it.id, User(
-                    it.id, it.email, it.password, it.lastLogin, activeSessions, it.role
-                )).let {
+                val activeSessions = it.activeSessions.filter { session -> session.token !== accessToken }
+                repository.updateOne(
+                    it.id, User(
+                        it.id, it.email, it.password, it.lastLogin, activeSessions, it.role
+                    )
+                ).let {
                     call.respond(HttpStatusCode.OK)
                 }
             } ?: call.respond(HttpStatusCode.NotFound, "User not found")
+        }
+
+        get("/auth/profile") {
+            val authorization = call.request.headers[HttpHeaders.Authorization]
+            val accessToken = authorization?.split(' ')?.get(1)
+
+            val decodedJWT = accessToken?.let { token -> repository.decodeJwtToken(token) }
+            val emailClaim = decodedJWT?.getClaim("email")?.asString()
+            val user = emailClaim?.let { email -> repository.findByEmail(email) }
+            val tokenExpiry = decodedJWT?.expiresAt
+            val today = Date()
+
+            println(emailClaim)
+            println(user)
+            if (user === null) {
+                return@get call.respond(HttpStatusCode.NotFound, "User not found")
+            }
+
+            if (today >= tokenExpiry) {
+                val newToken = repository.createJwtToken(user.id.toString(), user.email)
+                if (newToken.isNullOrEmpty()) {
+                    call.respond(HttpStatusCode.InternalServerError, "Token could not be generated.")
+                }
+                val csrf = RandomStringUtils.random(20, 0, 0, true, true, null, SecureRandom());
+
+                var activeSessions = user.activeSessions.filter { it.token !== newToken }
+                activeSessions = user.activeSessions.filter { it.validTo > Date() }
+                activeSessions = activeSessions.plus(
+                    UserSession(
+                        token = newToken!!,
+                        CSRF = csrf,
+                        validTo = Date.from(Instant.now().plus(7, ChronoUnit.DAYS))
+                    )
+                )
+
+                repository.updateOne(
+                    user.id, User(
+                        user.id, user.email, user.password, Date(), activeSessions, user.role
+                    )
+                )
+
+                call.respond(
+                    HttpStatusCode.OK,
+                    LoginResponse(newToken, UserLoginResponse(user.id.toString(), user.email, csrf))
+                )
+            } else {
+                var userCsrf: String? = null
+                user.activeSessions.forEach { el ->
+                    println(el.token)
+                    if (el.token.equals(accessToken)) {
+                        userCsrf = el.CSRF
+                        println("True")
+                    }
+                }
+
+                userCsrf?.let { csrf ->
+                    call.respond(
+                        HttpStatusCode.OK,
+                        UserLoginResponse(user.id.toString(), user.email, csrf)
+                    )
+                } ?: call.respond(HttpStatusCode.NotFound, "User not found")
+            }
         }
     }
 }

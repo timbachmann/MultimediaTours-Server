@@ -2,6 +2,7 @@ package de.timbachmann.api.repository
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.interfaces.DecodedJWT
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.UpdateOptions
@@ -33,6 +34,10 @@ class UserRepository(private val mongoDatabase: MongoDatabase, private val appli
                 .withClaim("id", userId)
                 .withExpiresAt(Date.from(Instant.now().plus(7, ChronoUnit.DAYS)))
                 .sign(Algorithm.HMAC256(application.environment.config.property("ktor.jwt.secret").getString()))
+    }
+
+    override suspend fun decodeJwtToken(token: String): DecodedJWT? {
+        return JWT.decode(token)
     }
 
     override suspend fun insertOne(user: User): BsonValue? {

@@ -15,6 +15,7 @@ fun Application.configureHTTP() {
         allowMethod(HttpMethod.Patch)
         allowMethod(HttpMethod.Post)
         allowHeader(HttpHeaders.Authorization)
+        allowHeaders { true }
         allowSameOrigin = true
         allowNonSimpleContentTypes = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
