@@ -142,7 +142,7 @@ fun Route.userRouting() {
 
             call.respond(
                 HttpStatusCode.OK,
-                LoginResponse(token, UserLoginResponse(user.id.toString(), user.email, csrf))
+                LoginResponse(token, UserLoginResponse(user.id.toString(), user.email, csrf, user.role))
             )
         }
 
@@ -202,7 +202,7 @@ fun Route.userRouting() {
 
                 call.respond(
                     HttpStatusCode.OK,
-                    LoginResponse(newToken, UserLoginResponse(user.id.toString(), user.email, csrf))
+                    LoginResponse(newToken, UserLoginResponse(user.id.toString(), user.email, csrf, user.role))
                 )
             } else {
                 var userCsrf: String? = null
@@ -217,7 +217,7 @@ fun Route.userRouting() {
                 userCsrf?.let { csrf ->
                     call.respond(
                         HttpStatusCode.OK,
-                        UserLoginResponse(user.id.toString(), user.email, csrf)
+                        UserLoginResponse(user.id.toString(), user.email, csrf, user.role)
                     )
                 } ?: call.respond(HttpStatusCode.NotFound, "User not found")
             }

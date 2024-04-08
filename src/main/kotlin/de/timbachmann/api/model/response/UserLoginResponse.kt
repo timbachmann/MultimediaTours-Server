@@ -4,4 +4,5 @@ data class UserLoginResponse(
     val id: String,
     val email: String,
     val CSRF: String,
+    val role: String,
 )
