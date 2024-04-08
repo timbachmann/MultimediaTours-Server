@@ -16,7 +16,7 @@ data class Tour(
         id = id.toString(),
         title = title,
         source = source,
-        multimediaObjects = multimediaObjects.map{ it.toString() },
+        multimediaObjects = multimediaObjects.map { it.toString() },
         author = author
     )
 }

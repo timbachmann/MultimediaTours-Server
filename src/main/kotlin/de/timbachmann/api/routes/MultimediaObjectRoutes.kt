@@ -1,6 +1,7 @@
 package de.timbachmann.api.routes
 
 
+import de.timbachmann.api.model.entity.Tour
 import de.timbachmann.api.model.request.MultimediaObjectRequest
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import io.ktor.client.request.*
@@ -54,15 +55,15 @@ fun Route.multimediaObjectRouting() {
                 } ?: call.respondText("No records found for id $id")
             }
 
-            patch("/{id?}") {
-                val id = call.parameters["id"] ?: return@patch call.respondText(
+            put("/{id?}") {
+                val id = call.parameters["id"] ?: return@put call.respondText(
                     text = "Missing multimediaObject id",
                     status = HttpStatusCode.BadRequest
                 )
                 val updated = repository.updateOne(ObjectId(id), call.receive())
                 call.respondText(
-                    text = if (updated == 1L) "MultimediaObject updated successfully" else "MultimediaObject not found",
-                    status = if (updated == 1L) HttpStatusCode.OK else HttpStatusCode.NotFound
+                    text = if (updated.wasAcknowledged()) "MultimediaObject updated successfully" else updated.toString(),
+                    status = if (updated.wasAcknowledged()) HttpStatusCode.OK else HttpStatusCode.InternalServerError
                 )
             }
         }

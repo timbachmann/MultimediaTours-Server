@@ -1,5 +1,6 @@
 package de.timbachmann.api.routes
 
+import de.timbachmann.api.model.entity.Tour
 import de.timbachmann.api.model.request.TourRequest
 import de.timbachmann.api.repository.interfaces.TourRepositoryInterface
 import io.ktor.http.*
@@ -54,15 +55,16 @@ fun Route.tourRouting() {
                 } ?: call.respondText("No records found for id $id")
             }
 
-            patch("/{id?}") {
-                val id = call.parameters["id"] ?: return@patch call.respondText(
+            put("/{id?}") {
+                val id = call.parameters["id"] ?: return@put call.respondText(
                     text = "Missing tour id",
                     status = HttpStatusCode.BadRequest
                 )
-                val updated = repository.updateOne(ObjectId(id), call.receive())
+                val tourRequest = call.receive<TourRequest>()
+                val updated = repository.updateOne(ObjectId(id), tourRequest.toTourObject())
                 call.respondText(
-                    text = if (updated == 1L) "Tour updated successfully" else "Tour not found",
-                    status = if (updated == 1L) HttpStatusCode.OK else HttpStatusCode.NotFound
+                    text = if (updated.wasAcknowledged()) "Tour updated successfully" else updated.toString(),
+                    status = if (updated.wasAcknowledged()) HttpStatusCode.OK else HttpStatusCode.InternalServerError
                 )
             }
         }

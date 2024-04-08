@@ -4,6 +4,7 @@ import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
+import com.mongodb.client.result.UpdateResult
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import de.timbachmann.api.model.entity.MultimediaObject
 import de.timbachmann.api.model.entity.Tour
@@ -49,24 +50,19 @@ class TourRepository(private val mongoDatabase: MongoDatabase) : TourRepositoryI
         mongoDatabase.getCollection<Tour>(TOUR_COLLECTION).withDocumentClass<Tour>()
             .find(Filters.eq("_id", objectId)).firstOrNull()
 
-    override suspend fun updateOne(objectId: ObjectId, tour: Tour): Long {
-        try {
-            val query = Filters.eq("_id", objectId)
-            val updates = Updates.combine(
-                Updates.set(Tour::title.name, tour.title),
-                Updates.set(Tour::source.name, tour.source),
-                Updates.set(Tour::multimediaObjects.name, tour.multimediaObjects),
-                Updates.set(Tour::author.name, tour.author)
-            )
-            val options = UpdateOptions().upsert(true)
-            val result =
-                mongoDatabase.getCollection<Tour>(TOUR_COLLECTION)
-                    .updateOne(query, updates, options)
+    override suspend fun updateOne(objectId: ObjectId, tour: Tour): UpdateResult {
+        val query = Filters.eq("_id", objectId)
+        val updates = Updates.combine(
+            Updates.set(Tour::title.name, tour.title),
+            Updates.set(Tour::source.name, tour.source),
+            Updates.set(Tour::multimediaObjects.name, tour.multimediaObjects),
+            Updates.set(Tour::author.name, tour.author)
+        )
+        val options = UpdateOptions().upsert(true)
+        val result =
+            mongoDatabase.getCollection<Tour>(TOUR_COLLECTION)
+                .updateOne(query, updates, options)
 
-            return result.modifiedCount
-        } catch (e: MongoException) {
-            System.err.println("Unable to update due to an error: $e")
-        }
-        return 0
+        return result
     }
 }
