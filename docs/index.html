@@ -944,6 +944,13 @@
             -->
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
+                  <li class="nav-header" data-group="Files"><a href="#api-Files">API Methods - Files</a></li>
+                    <li data-group="Files" data-name="multimediaObjectsIdObjectsGet" class="">
+                      <a href="#api-Files-multimediaObjectsIdObjectsGet">multimediaObjectsIdObjectsGet</a>
+                    </li>
+                    <li data-group="Files" data-name="multimediaObjectsUploadPost" class="">
+                      <a href="#api-Files-multimediaObjectsUploadPost">multimediaObjectsUploadPost</a>
+                    </li>
                   <li class="nav-header" data-group="MultimediaObjects"><a href="#api-MultimediaObjects">API Methods - MultimediaObjects</a></li>
                     <li data-group="MultimediaObjects" data-name="multimediaObjectsGet" class="">
                       <a href="#api-MultimediaObjects-multimediaObjectsGet">multimediaObjectsGet</a>
@@ -954,8 +961,8 @@
                     <li data-group="MultimediaObjects" data-name="multimediaObjectsIdGet" class="">
                       <a href="#api-MultimediaObjects-multimediaObjectsIdGet">multimediaObjectsIdGet</a>
                     </li>
-                    <li data-group="MultimediaObjects" data-name="multimediaObjectsIdPatch" class="">
-                      <a href="#api-MultimediaObjects-multimediaObjectsIdPatch">multimediaObjectsIdPatch</a>
+                    <li data-group="MultimediaObjects" data-name="multimediaObjectsIdPut" class="">
+                      <a href="#api-MultimediaObjects-multimediaObjectsIdPut">multimediaObjectsIdPut</a>
                     </li>
                     <li data-group="MultimediaObjects" data-name="multimediaObjectsPost" class="">
                       <a href="#api-MultimediaObjects-multimediaObjectsPost">multimediaObjectsPost</a>
@@ -970,8 +977,8 @@
                     <li data-group="Tours" data-name="toursIdGet" class="">
                       <a href="#api-Tours-toursIdGet">toursIdGet</a>
                     </li>
-                    <li data-group="Tours" data-name="toursIdPatch" class="">
-                      <a href="#api-Tours-toursIdPatch">toursIdPatch</a>
+                    <li data-group="Tours" data-name="toursIdPut" class="">
+                      <a href="#api-Tours-toursIdPut">toursIdPut</a>
                     </li>
                     <li data-group="Tours" data-name="toursPost" class="">
                       <a href="#api-Tours-toursPost">toursPost</a>
@@ -986,8 +993,8 @@
                     <li data-group="Users" data-name="usersIdGet" class="">
                       <a href="#api-Users-usersIdGet">usersIdGet</a>
                     </li>
-                    <li data-group="Users" data-name="usersIdPatch" class="">
-                      <a href="#api-Users-usersIdPatch">usersIdPatch</a>
+                    <li data-group="Users" data-name="usersIdPut" class="">
+                      <a href="#api-Users-usersIdPut">usersIdPut</a>
                     </li>
                     <li data-group="Users" data-name="usersPost" class="">
                       <a href="#api-Users-usersPost">usersPost</a>
@@ -1011,6 +1018,516 @@
           </div>
         </div>
         <div id="sections">
+                <section id="api-Files">
+                  <h1>Files</h1>
+                    <div id="api-Files-multimediaObjectsIdObjectsGet">
+                      <article id="api-Files-multimediaObjectsIdObjectsGet-0" data-group="User" data-name="multimediaObjectsIdObjectsGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>multimediaObjectsIdObjectsGet</h1>
+                          <p>Get MultimediaObject Object by ID</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/multimedia-objects/{id}/objects</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Files-multimediaObjectsIdObjectsGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"http://127.0.0.1:8090/multimedia-objects/{id}/objects"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.FilesApi;
+
+import java.io.File;
+import java.util.*;
+
+public class FilesApiExample {
+
+    public static void main(String[] args) {
+        
+        FilesApi apiInstance = new FilesApi();
+        String id = id_example; // String | 
+        try {
+            apiInstance.multimediaObjectsIdObjectsGet(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.FilesApi;
+
+public class FilesApiExample {
+
+    public static void main(String[] args) {
+        FilesApi apiInstance = new FilesApi();
+        String id = id_example; // String | 
+        try {
+            apiInstance.multimediaObjectsIdObjectsGet(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // 
+
+FilesApi *apiInstance = [[FilesApi alloc] init];
+
+// Get MultimediaObject Object by ID
+[apiInstance multimediaObjectsIdObjectsGetWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
+
+var api = new MultimediaToursApi.FilesApi()
+var id = id_example; // {{String}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.multimediaObjectsIdObjectsGet(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class multimediaObjectsIdObjectsGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new FilesApi();
+            var id = id_example;  // String | 
+
+            try
+            {
+                // Get MultimediaObject Object by ID
+                apiInstance.multimediaObjectsIdObjectsGet(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling FilesApi.multimediaObjectsIdObjectsGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiFilesApi();
+$id = id_example; // String | 
+
+try {
+    $api_instance->multimediaObjectsIdObjectsGet($id);
+} catch (Exception $e) {
+    echo 'Exception when calling FilesApi->multimediaObjectsIdObjectsGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::FilesApi;
+
+my $api_instance = WWW::SwaggerClient::FilesApi->new();
+my $id = id_example; # String | 
+
+eval { 
+    $api_instance->multimediaObjectsIdObjectsGet(id => $id);
+};
+if ($@) {
+    warn "Exception when calling FilesApi->multimediaObjectsIdObjectsGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.FilesApi()
+id = id_example # String | 
+
+try: 
+    # Get MultimediaObject Object by ID
+    api_instance.multimedia_objects_id_objects_get(id)
+except ApiException as e:
+    print("Exception when calling FilesApi->multimediaObjectsIdObjectsGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_multimediaObjectsIdObjectsGet_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Successful response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 404 - MultimediaObject not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Files-multimediaObjectsUploadPost">
+                      <article id="api-Files-multimediaObjectsUploadPost-0" data-group="User" data-name="multimediaObjectsUploadPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>multimediaObjectsUploadPost</h1>
+                          <p>Upload a new Object</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/multimedia-objects/upload</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Files-multimediaObjectsUploadPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Files-multimediaObjectsUploadPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Content-Type: multipart/form-data"\
+"http://127.0.0.1:8090/multimedia-objects/upload"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.FilesApi;
+
+import java.io.File;
+import java.util.*;
+
+public class FilesApiExample {
+
+    public static void main(String[] args) {
+        
+        FilesApi apiInstance = new FilesApi();
+        String file = file_example; // String | 
+        try {
+            apiInstance.multimediaObjectsUploadPost(file);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.FilesApi;
+
+public class FilesApiExample {
+
+    public static void main(String[] args) {
+        FilesApi apiInstance = new FilesApi();
+        String file = file_example; // String | 
+        try {
+            apiInstance.multimediaObjectsUploadPost(file);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *file = file_example; // 
+
+FilesApi *apiInstance = [[FilesApi alloc] init];
+
+// Upload a new Object
+[apiInstance multimediaObjectsUploadPostWith:file
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
+
+var api = new MultimediaToursApi.FilesApi()
+var file = file_example; // {{String}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.multimediaObjectsUploadPost(file, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class multimediaObjectsUploadPostExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new FilesApi();
+            var file = file_example;  // String | 
+
+            try
+            {
+                // Upload a new Object
+                apiInstance.multimediaObjectsUploadPost(file);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling FilesApi.multimediaObjectsUploadPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiFilesApi();
+$file = file_example; // String | 
+
+try {
+    $api_instance->multimediaObjectsUploadPost($file);
+} catch (Exception $e) {
+    echo 'Exception when calling FilesApi->multimediaObjectsUploadPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::FilesApi;
+
+my $api_instance = WWW::SwaggerClient::FilesApi->new();
+my $file = file_example; # String | 
+
+eval { 
+    $api_instance->multimediaObjectsUploadPost(file => $file);
+};
+if ($@) {
+    warn "Exception when calling FilesApi->multimediaObjectsUploadPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.FilesApi()
+file = file_example # String | 
+
+try: 
+    # Upload a new Object
+    api_instance.multimedia_objects_upload_post(file)
+except ApiException as e:
+    print("Exception when calling FilesApi->multimediaObjectsUploadPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+                            <div class="methodsubtabletitle">Form parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">file*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_multimediaObjectsUploadPost_file">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                                      <span class="format">
+                                                          (application/octet-stream)
+                                                      </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Object uploaded successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - Bad request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-MultimediaObjects">
                   <h1>MultimediaObjects</h1>
                     <div id="api-MultimediaObjects-multimediaObjectsGet">
@@ -1741,10 +2258,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-MultimediaObjects-multimediaObjectsIdPatch">
-                      <article id="api-MultimediaObjects-multimediaObjectsIdPatch-0" data-group="User" data-name="multimediaObjectsIdPatch" data-version="0">
+                    <div id="api-MultimediaObjects-multimediaObjectsIdPut">
+                      <article id="api-MultimediaObjects-multimediaObjectsIdPut-0" data-group="User" data-name="multimediaObjectsIdPut" data-version="0">
                         <div class="pull-left">
-                          <h1>multimediaObjectsIdPatch</h1>
+                          <h1>multimediaObjectsIdPut</h1>
                           <p>Update MultimediaObject by ID</p>
                         </div>
                         <div class="pull-right"></div>
@@ -1753,31 +2270,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/multimedia-objects/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/multimedia-objects/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-java">Java</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPatch-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-MultimediaObjects-multimediaObjectsIdPut-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+                          <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
 "http://127.0.0.1:8090/multimedia-objects/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-java">
+                          <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1794,16 +2311,16 @@ public class MultimediaObjectsApiExample {
         MultimediaObjectRequest body = ; // MultimediaObjectRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdPatch(body, id);
+            apiInstance.multimediaObjectsIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdPatch");
+            System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-android">
+                          <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.MultimediaObjectsApi;
 
 public class MultimediaObjectsApiExample {
@@ -1813,26 +2330,26 @@ public class MultimediaObjectsApiExample {
         MultimediaObjectRequest body = ; // MultimediaObjectRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdPatch(body, id);
+            apiInstance.multimediaObjectsIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdPatch");
+            System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-groovy">
+  <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-objc">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">MultimediaObjectRequest *body = ; // 
 String *id = id_example; // 
 
 MultimediaObjectsApi *apiInstance = [[MultimediaObjectsApi alloc] init];
 
 // Update MultimediaObject by ID
-[apiInstance multimediaObjectsIdPatchWith:body
+[apiInstance multimediaObjectsIdPutWith:body
     id:id
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -1842,7 +2359,7 @@ MultimediaObjectsApi *apiInstance = [[MultimediaObjectsApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-javascript">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.MultimediaObjectsApi()
@@ -1856,14 +2373,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.multimediaObjectsIdPatch(bodyid, callback);
+api.multimediaObjectsIdPut(bodyid, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-angular">
+                            <!--<div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-csharp">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1872,7 +2389,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class multimediaObjectsIdPatchExample
+    public class multimediaObjectsIdPutExample
     {
         public void main()
         {
@@ -1884,11 +2401,11 @@ namespace Example
             try
             {
                 // Update MultimediaObject by ID
-                apiInstance.multimediaObjectsIdPatch(body, id);
+                apiInstance.multimediaObjectsIdPut(body, id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling MultimediaObjectsApi.multimediaObjectsIdPatch: " + e.Message );
+                Debug.Print("Exception when calling MultimediaObjectsApi.multimediaObjectsIdPut: " + e.Message );
             }
         }
     }
@@ -1896,7 +2413,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-php">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -1905,14 +2422,14 @@ $body = ; // MultimediaObjectRequest |
 $id = id_example; // String | 
 
 try {
-    $api_instance->multimediaObjectsIdPatch($body, $id);
+    $api_instance->multimediaObjectsIdPut($body, $id);
 } catch (Exception $e) {
-    echo 'Exception when calling MultimediaObjectsApi->multimediaObjectsIdPatch: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling MultimediaObjectsApi->multimediaObjectsIdPut: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-perl">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::MultimediaObjectsApi;
@@ -1922,14 +2439,14 @@ my $body = WWW::SwaggerClient::Object::MultimediaObjectRequest->new(); # Multime
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->multimediaObjectsIdPatch(body => $body, id => $id);
+    $api_instance->multimediaObjectsIdPut(body => $body, id => $id);
 };
 if ($@) {
-    warn "Exception when calling MultimediaObjectsApi->multimediaObjectsIdPatch: $@\n";
+    warn "Exception when calling MultimediaObjectsApi->multimediaObjectsIdPut: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPatch-0-python">
+                            <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1943,9 +2460,9 @@ id = id_example # String |
 
 try: 
     # Update MultimediaObject by ID
-    api_instance.multimedia_objects_id_patch(body, id)
+    api_instance.multimedia_objects_id_put(body, id)
 except ApiException as e:
-    print("Exception when calling MultimediaObjectsApi->multimediaObjectsIdPatch: %s\n" % e)</code></pre>
+    print("Exception when calling MultimediaObjectsApi->multimediaObjectsIdPut: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1961,7 +2478,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_multimediaObjectsIdPatch_id">
+                                      <div id="d2e199_multimediaObjectsIdPut_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -2013,12 +2530,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_multimediaObjectsIdPatch_body');
+                                  var result = $('#d2e199_multimediaObjectsIdPut_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_multimediaObjectsIdPatch_body"></div>
+                                <div id="d2e199_multimediaObjectsIdPut_body"></div>
                                 </td>
                                 </tr>
                             </table>
@@ -3053,10 +3570,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Tours-toursIdPatch">
-                      <article id="api-Tours-toursIdPatch-0" data-group="User" data-name="toursIdPatch" data-version="0">
+                    <div id="api-Tours-toursIdPut">
+                      <article id="api-Tours-toursIdPut-0" data-group="User" data-name="toursIdPut" data-version="0">
                         <div class="pull-left">
-                          <h1>toursIdPatch</h1>
+                          <h1>toursIdPut</h1>
                           <p>Update Tour by ID</p>
                         </div>
                         <div class="pull-right"></div>
@@ -3065,31 +3582,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/tours/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/tours/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Tours-toursIdPatch-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Tours-toursIdPatch-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Tours-toursIdPatch-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Tours-toursIdPatch-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Tours-toursIdPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Tours-toursIdPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Tours-toursIdPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Tours-toursIdPut-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Tours-toursIdPatch-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+                          <div class="tab-pane active" id="examples-Tours-toursIdPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
 "http://127.0.0.1:8090/tours/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Tours-toursIdPatch-0-java">
+                          <div class="tab-pane" id="examples-Tours-toursIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -3106,16 +3623,16 @@ public class ToursApiExample {
         TourRequest body = ; // TourRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.toursIdPatch(body, id);
+            apiInstance.toursIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ToursApi#toursIdPatch");
+            System.err.println("Exception when calling ToursApi#toursIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Tours-toursIdPatch-0-android">
+                          <div class="tab-pane" id="examples-Tours-toursIdPut-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ToursApi;
 
 public class ToursApiExample {
@@ -3125,26 +3642,26 @@ public class ToursApiExample {
         TourRequest body = ; // TourRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.toursIdPatch(body, id);
+            apiInstance.toursIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ToursApi#toursIdPatch");
+            System.err.println("Exception when calling ToursApi#toursIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Tours-toursIdPatch-0-groovy">
+  <div class="tab-pane" id="examples-Tours-toursIdPut-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-objc">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TourRequest *body = ; // 
 String *id = id_example; // 
 
 ToursApi *apiInstance = [[ToursApi alloc] init];
 
 // Update Tour by ID
-[apiInstance toursIdPatchWith:body
+[apiInstance toursIdPutWith:body
     id:id
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -3154,7 +3671,7 @@ ToursApi *apiInstance = [[ToursApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-javascript">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.ToursApi()
@@ -3168,14 +3685,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.toursIdPatch(bodyid, callback);
+api.toursIdPut(bodyid, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Tours-toursIdPatch-0-angular">
+                            <!--<div class="tab-pane" id="examples-Tours-toursIdPut-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-csharp">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -3184,7 +3701,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class toursIdPatchExample
+    public class toursIdPutExample
     {
         public void main()
         {
@@ -3196,11 +3713,11 @@ namespace Example
             try
             {
                 // Update Tour by ID
-                apiInstance.toursIdPatch(body, id);
+                apiInstance.toursIdPut(body, id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ToursApi.toursIdPatch: " + e.Message );
+                Debug.Print("Exception when calling ToursApi.toursIdPut: " + e.Message );
             }
         }
     }
@@ -3208,7 +3725,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-php">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -3217,14 +3734,14 @@ $body = ; // TourRequest |
 $id = id_example; // String | 
 
 try {
-    $api_instance->toursIdPatch($body, $id);
+    $api_instance->toursIdPut($body, $id);
 } catch (Exception $e) {
-    echo 'Exception when calling ToursApi->toursIdPatch: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ToursApi->toursIdPut: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-perl">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::ToursApi;
@@ -3234,14 +3751,14 @@ my $body = WWW::SwaggerClient::Object::TourRequest->new(); # TourRequest |
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->toursIdPatch(body => $body, id => $id);
+    $api_instance->toursIdPut(body => $body, id => $id);
 };
 if ($@) {
-    warn "Exception when calling ToursApi->toursIdPatch: $@\n";
+    warn "Exception when calling ToursApi->toursIdPut: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Tours-toursIdPatch-0-python">
+                            <div class="tab-pane" id="examples-Tours-toursIdPut-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -3255,9 +3772,9 @@ id = id_example # String |
 
 try: 
     # Update Tour by ID
-    api_instance.tours_id_patch(body, id)
+    api_instance.tours_id_put(body, id)
 except ApiException as e:
-    print("Exception when calling ToursApi->toursIdPatch: %s\n" % e)</code></pre>
+    print("Exception when calling ToursApi->toursIdPut: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -3273,7 +3790,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_toursIdPatch_id">
+                                      <div id="d2e199_toursIdPut_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -3325,12 +3842,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_toursIdPatch_body');
+                                  var result = $('#d2e199_toursIdPut_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_toursIdPatch_body"></div>
+                                <div id="d2e199_toursIdPut_body"></div>
                                 </td>
                                 </tr>
                             </table>
@@ -4365,10 +4882,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Users-usersIdPatch">
-                      <article id="api-Users-usersIdPatch-0" data-group="User" data-name="usersIdPatch" data-version="0">
+                    <div id="api-Users-usersIdPut">
+                      <article id="api-Users-usersIdPut-0" data-group="User" data-name="usersIdPut" data-version="0">
                         <div class="pull-left">
-                          <h1>usersIdPatch</h1>
+                          <h1>usersIdPut</h1>
                           <p>Update User by ID</p>
                         </div>
                         <div class="pull-right"></div>
@@ -4377,31 +4894,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/users/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/users/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Users-usersIdPatch-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Users-usersIdPatch-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Users-usersIdPatch-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Users-usersIdPatch-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Users-usersIdPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Users-usersIdPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Users-usersIdPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Users-usersIdPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Users-usersIdPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Users-usersIdPut-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Users-usersIdPatch-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+                          <div class="tab-pane active" id="examples-Users-usersIdPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
 "http://127.0.0.1:8090/users/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Users-usersIdPatch-0-java">
+                          <div class="tab-pane" id="examples-Users-usersIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -4418,16 +4935,16 @@ public class UsersApiExample {
         UserRequest body = ; // UserRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.usersIdPatch(body, id);
+            apiInstance.usersIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling UsersApi#usersIdPatch");
+            System.err.println("Exception when calling UsersApi#usersIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Users-usersIdPatch-0-android">
+                          <div class="tab-pane" id="examples-Users-usersIdPut-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UsersApi;
 
 public class UsersApiExample {
@@ -4437,26 +4954,26 @@ public class UsersApiExample {
         UserRequest body = ; // UserRequest | 
         String id = id_example; // String | 
         try {
-            apiInstance.usersIdPatch(body, id);
+            apiInstance.usersIdPut(body, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling UsersApi#usersIdPatch");
+            System.err.println("Exception when calling UsersApi#usersIdPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Users-usersIdPatch-0-groovy">
+  <div class="tab-pane" id="examples-Users-usersIdPut-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-objc">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">UserRequest *body = ; // 
 String *id = id_example; // 
 
 UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Update User by ID
-[apiInstance usersIdPatchWith:body
+[apiInstance usersIdPutWith:body
     id:id
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -4466,7 +4983,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-javascript">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.UsersApi()
@@ -4480,14 +4997,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.usersIdPatch(bodyid, callback);
+api.usersIdPut(bodyid, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Users-usersIdPatch-0-angular">
+                            <!--<div class="tab-pane" id="examples-Users-usersIdPut-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-csharp">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -4496,7 +5013,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class usersIdPatchExample
+    public class usersIdPutExample
     {
         public void main()
         {
@@ -4508,11 +5025,11 @@ namespace Example
             try
             {
                 // Update User by ID
-                apiInstance.usersIdPatch(body, id);
+                apiInstance.usersIdPut(body, id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UsersApi.usersIdPatch: " + e.Message );
+                Debug.Print("Exception when calling UsersApi.usersIdPut: " + e.Message );
             }
         }
     }
@@ -4520,7 +5037,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-php">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -4529,14 +5046,14 @@ $body = ; // UserRequest |
 $id = id_example; // String | 
 
 try {
-    $api_instance->usersIdPatch($body, $id);
+    $api_instance->usersIdPut($body, $id);
 } catch (Exception $e) {
-    echo 'Exception when calling UsersApi->usersIdPatch: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling UsersApi->usersIdPut: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-perl">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UsersApi;
@@ -4546,14 +5063,14 @@ my $body = WWW::SwaggerClient::Object::UserRequest->new(); # UserRequest |
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->usersIdPatch(body => $body, id => $id);
+    $api_instance->usersIdPut(body => $body, id => $id);
 };
 if ($@) {
-    warn "Exception when calling UsersApi->usersIdPatch: $@\n";
+    warn "Exception when calling UsersApi->usersIdPut: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Users-usersIdPatch-0-python">
+                            <div class="tab-pane" id="examples-Users-usersIdPut-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -4567,9 +5084,9 @@ id = id_example # String |
 
 try: 
     # Update User by ID
-    api_instance.users_id_patch(body, id)
+    api_instance.users_id_put(body, id)
 except ApiException as e:
-    print("Exception when calling UsersApi->usersIdPatch: %s\n" % e)</code></pre>
+    print("Exception when calling UsersApi->usersIdPut: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -4585,7 +5102,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_usersIdPatch_id">
+                                      <div id="d2e199_usersIdPut_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -4637,12 +5154,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_usersIdPatch_body');
+                                  var result = $('#d2e199_usersIdPut_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_usersIdPatch_body"></div>
+                                <div id="d2e199_usersIdPut_body"></div>
                                 </td>
                                 </tr>
                             </table>

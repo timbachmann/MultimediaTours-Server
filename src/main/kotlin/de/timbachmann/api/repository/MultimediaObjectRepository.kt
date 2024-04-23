@@ -57,7 +57,8 @@ class MultimediaObjectRepository(private val mongoDatabase: MongoDatabase) : Mul
             Updates.set(MultimediaObject::title.name, multimediaObject.title),
             Updates.set(MultimediaObject::date.name, multimediaObject.date),
             Updates.set(MultimediaObject::source.name, multimediaObject.source),
-            Updates.set(MultimediaObject::position.name, multimediaObject.position),
+            if (multimediaObject.position !== null) { Updates.set(MultimediaObject::position.name, multimediaObject.position) }
+            else { Updates.unset(MultimediaObject::position.name) },
             Updates.set(MultimediaObject::data.name, multimediaObject.data),
             Updates.set(MultimediaObject::author.name, multimediaObject.author)
         )

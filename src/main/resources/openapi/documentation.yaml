@@ -70,7 +70,7 @@ paths:
           description: MultimediaObject not found
       tags:
         - Multimedia Objects
-    patch:
+    put:
       summary: Update MultimediaObject by ID
       parameters:
         - name: id
@@ -93,6 +93,46 @@ paths:
           description: MultimediaObject not found
       tags:
         - Multimedia Objects
+
+  /multimedia-objects/upload:
+    post:
+      summary: Upload a new Object
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: application/octet-stream
+      responses:
+        '201':
+          description: Object uploaded successfully
+        '400':
+          description: Bad request
+      tags:
+        - Files
+  /multimedia-objects/{id}/objects:
+    get:
+      summary: Get MultimediaObject Object by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: { }
+        '404':
+          description: MultimediaObject not found
+      tags:
+        - Files
 
   /tours:
     post:
@@ -158,7 +198,7 @@ paths:
           description: Tour not found
       tags:
         - Tours
-    patch:
+    put:
       summary: Update Tour by ID
       parameters:
         - name: id
@@ -245,7 +285,7 @@ paths:
           description: User not found
       tags:
         - Users
-    patch:
+    put:
       summary: Update User by ID
       parameters:
         - name: id

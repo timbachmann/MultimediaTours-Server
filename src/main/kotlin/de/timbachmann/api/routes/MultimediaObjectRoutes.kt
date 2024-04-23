@@ -1,11 +1,10 @@
 package de.timbachmann.api.routes
 
 
-import de.timbachmann.api.model.entity.Tour
 import de.timbachmann.api.model.request.MultimediaObjectRequest
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
-import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
@@ -13,6 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
+import java.io.File
 
 fun Route.multimediaObjectRouting() {
     val repository by inject<MultimediaObjectRepositoryInterface>()
@@ -26,7 +26,7 @@ fun Route.multimediaObjectRouting() {
 
             get {
                 repository.getAll().let {
-                    call.respond(it.map{obj -> obj.toResponse()})
+                    call.respond(it.map { obj -> obj.toResponse() })
                 }
             }
 
@@ -52,7 +52,7 @@ fun Route.multimediaObjectRouting() {
                 }
                 repository.findById(ObjectId(id))?.let {
                     call.respond(it.toResponse())
-                } ?: call.respondText("No records found for id $id")
+                } ?: call.respondText("No records found for id $id", status = HttpStatusCode.NotFound)
             }
 
             put("/{id?}") {
@@ -66,6 +66,49 @@ fun Route.multimediaObjectRouting() {
                     status = if (updated.wasAcknowledged()) HttpStatusCode.OK else HttpStatusCode.InternalServerError
                 )
             }
+
+
+            post("/upload") {
+                var path: String? = null
+                val multipartData = call.receiveMultipart()
+
+                multipartData.forEachPart {
+                    when (it) {
+                        is PartData.FileItem -> {
+                            val fileName = it.originalFileName as String
+                            val bytes = it.streamProvider().readBytes()
+                            path = "./multimedia/$fileName"
+                            val file = path?.let { it1 -> File(it1) }
+                            //file?.mkdirs()
+                            file?.writeBytes(bytes)
+                        }
+
+                        else -> {}
+                    }
+                    it.dispose()
+                }
+
+                path?.let {
+                    call.respondText(it, status = HttpStatusCode.OK)
+                } ?: call.respondText("Could not upload file!", status =  HttpStatusCode.InternalServerError)
+            }
+
+            get("/{id?}/object") {
+                val id = call.parameters["id"]
+                if (id.isNullOrEmpty()) {
+                    return@get call.respondText(
+                        text = "Missing id",
+                        status = HttpStatusCode.BadRequest
+                    )
+                }
+                val path = repository.findById(ObjectId(id))?.data
+                path?.let {
+                    val file = File(it)
+                    call.respondFile(file)
+                }
+            }
         }
     }
+
+
 }

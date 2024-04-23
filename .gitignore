@@ -27,4 +27,5 @@ replay_pid*
 .gradle/
 build/
 .env
+multimedia/
 
