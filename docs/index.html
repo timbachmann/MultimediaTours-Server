@@ -1053,8 +1053,8 @@
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Files-multimediaObjectsIdObjectsGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"http://127.0.0.1:8090/multimedia-objects/{id}/objects"</code></pre>
+-H "Accept: image/png,video/mp4,audio/mp3"\
+"//multimedia-objects/{id}/objects"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1072,7 +1072,8 @@ public class FilesApiExample {
         FilesApi apiInstance = new FilesApi();
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdObjectsGet(id);
+            byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
             e.printStackTrace();
@@ -1090,7 +1091,8 @@ public class FilesApiExample {
         FilesApi apiInstance = new FilesApi();
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdObjectsGet(id);
+            byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
             e.printStackTrace();
@@ -1109,7 +1111,10 @@ FilesApi *apiInstance = [[FilesApi alloc] init];
 
 // Get MultimediaObject Object by ID
 [apiInstance multimediaObjectsIdObjectsGetWith:id
-              completionHandler: ^(NSError* error) {
+              completionHandler: ^(byte[] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -1127,7 +1132,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.multimediaObjectsIdObjectsGet(id, callback);
@@ -1157,7 +1162,8 @@ namespace Example
             try
             {
                 // Get MultimediaObject Object by ID
-                apiInstance.multimediaObjectsIdObjectsGet(id);
+                byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -1177,7 +1183,8 @@ $api_instance = new Swagger\Client\ApiFilesApi();
 $id = id_example; // String | 
 
 try {
-    $api_instance->multimediaObjectsIdObjectsGet($id);
+    $result = $api_instance->multimediaObjectsIdObjectsGet($id);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling FilesApi->multimediaObjectsIdObjectsGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -1193,7 +1200,8 @@ my $api_instance = WWW::SwaggerClient::FilesApi->new();
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->multimediaObjectsIdObjectsGet(id => $id);
+    my $result = $api_instance->multimediaObjectsIdObjectsGet(id => $id);
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling FilesApi->multimediaObjectsIdObjectsGet: $@\n";
@@ -1213,7 +1221,8 @@ id = id_example # String |
 
 try: 
     # Get MultimediaObject Object by ID
-    api_instance.multimedia_objects_id_objects_get(id)
+    api_response = api_instance.multimedia_objects_id_objects_get(id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling FilesApi->multimediaObjectsIdObjectsGet: %s\n" % e)</code></pre>
                             </div>
@@ -1256,9 +1265,63 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-multimediaObjectsIdObjectsGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-multimediaObjectsIdObjectsGet-200-schema">
+                                  <div id='responses-multimediaObjectsIdObjectsGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "image/png" : {
+      "schema" : {
+        "type" : "string",
+        "format" : "binary",
+        "x-content-type" : "image/png"
+      }
+    },
+    "video/mp4" : {
+      "schema" : {
+        "type" : "string",
+        "format" : "binary"
+      }
+    },
+    "audio/mp3" : {
+      "schema" : {
+        "type" : "string",
+        "format" : "binary"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["image/png"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-multimediaObjectsIdObjectsGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-multimediaObjectsIdObjectsGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-multimediaObjectsIdObjectsGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - MultimediaObject not found </h3>
@@ -1306,7 +1369,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Files-multimediaObjectsUploadPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Content-Type: multipart/form-data"\
-"http://127.0.0.1:8090/multimedia-objects/upload"</code></pre>
+"//multimedia-objects/upload"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1322,7 +1385,7 @@ public class FilesApiExample {
     public static void main(String[] args) {
         
         FilesApi apiInstance = new FilesApi();
-        String file = file_example; // String | 
+        byte[] file = file_example; // byte[] | 
         try {
             apiInstance.multimediaObjectsUploadPost(file);
         } catch (ApiException e) {
@@ -1340,7 +1403,7 @@ public class FilesApiExample {
 
     public static void main(String[] args) {
         FilesApi apiInstance = new FilesApi();
-        String file = file_example; // String | 
+        byte[] file = file_example; // byte[] | 
         try {
             apiInstance.multimediaObjectsUploadPost(file);
         } catch (ApiException e) {
@@ -1355,7 +1418,7 @@ public class FilesApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">String *file = file_example; // 
+                              <pre class="prettyprint"><code class="language-cpp">byte[] *file = file_example; // 
 
 FilesApi *apiInstance = [[FilesApi alloc] init];
 
@@ -1373,7 +1436,7 @@ FilesApi *apiInstance = [[FilesApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.FilesApi()
-var file = file_example; // {{String}} 
+var file = file_example; // {{byte[]}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -1404,7 +1467,7 @@ namespace Example
         {
 
             var apiInstance = new FilesApi();
-            var file = file_example;  // String | 
+            var file = file_example;  // byte[] | 
 
             try
             {
@@ -1426,7 +1489,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiFilesApi();
-$file = file_example; // String | 
+$file = file_example; // byte[] | 
 
 try {
     $api_instance->multimediaObjectsUploadPost($file);
@@ -1442,7 +1505,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FilesApi;
 
 my $api_instance = WWW::SwaggerClient::FilesApi->new();
-my $file = file_example; # String | 
+my $file = file_example; # byte[] | 
 
 eval { 
     $api_instance->multimediaObjectsUploadPost(file => $file);
@@ -1461,7 +1524,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.FilesApi()
-file = file_example # String | 
+file = file_example # byte[] | 
 
 try: 
     # Upload a new Object
@@ -1490,10 +1553,10 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      String
+                                                      byte[]
                                                   </span>
                                                       <span class="format">
-                                                          (application/octet-stream)
+                                                          (binary)
                                                       </span>
                                   
                                               </div>
@@ -1564,7 +1627,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/multimedia-objects"</code></pre>
+"//multimedia-objects"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1780,7 +1843,7 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsIdDelete-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
-"http://127.0.0.1:8090/multimedia-objects/{id}"</code></pre>
+"//multimedia-objects/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2040,7 +2103,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/multimedia-objects/{id}"</code></pre>
+"//multimedia-objects/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2292,7 +2355,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/multimedia-objects/{id}"</code></pre>
+"//multimedia-objects/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2604,7 +2667,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-MultimediaObjects-multimediaObjectsPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/multimedia-objects"</code></pre>
+"//multimedia-objects"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-MultimediaObjects-multimediaObjectsPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2876,7 +2939,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Tours-toursGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/tours"</code></pre>
+"//tours"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Tours-toursGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3092,7 +3155,7 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Tours-toursIdDelete-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
-"http://127.0.0.1:8090/tours/{id}"</code></pre>
+"//tours/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Tours-toursIdDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3352,7 +3415,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Tours-toursIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/tours/{id}"</code></pre>
+"//tours/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Tours-toursIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3604,7 +3667,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Tours-toursIdPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/tours/{id}"</code></pre>
+"//tours/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Tours-toursIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3916,7 +3979,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Tours-toursPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/tours"</code></pre>
+"//tours"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Tours-toursPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4188,7 +4251,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-usersGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/users"</code></pre>
+"//users"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-usersGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4404,7 +4467,7 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Users-usersIdDelete-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
-"http://127.0.0.1:8090/users/{id}"</code></pre>
+"//users/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-usersIdDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4664,7 +4727,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-usersIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"http://127.0.0.1:8090/users/{id}"</code></pre>
+"//users/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-usersIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4916,7 +4979,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-usersIdPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/users/{id}"</code></pre>
+"//users/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-usersIdPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5228,7 +5291,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-usersPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Content-Type: application/json"\
-"http://127.0.0.1:8090/users"</code></pre>
+"//users"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-usersPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
