@@ -6,5 +6,7 @@ data class TourResponse(
     val title: String,
     val source: String,
     val multimediaObjects: List<String>,
-    val author: String
+    val author: String,
+    val tags: List<String>,
+    val generated: Boolean
 )

@@ -10,6 +10,7 @@ data class MultimediaObjectResponse(
     val title: String,
     val date: String,
     val source: String,
+    val tags: List<String>,
     val position: MultimediaObjectPosition?,
     val data: String,
     val author: String

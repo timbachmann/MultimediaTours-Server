@@ -1,6 +1,7 @@
 package de.timbachmann.api.routes
 
 import de.timbachmann.api.model.entity.Tour
+import de.timbachmann.api.model.request.GenerateRequest
 import de.timbachmann.api.model.request.TourRequest
 import de.timbachmann.api.repository.interfaces.TourRepositoryInterface
 import io.ktor.http.*
@@ -24,12 +25,6 @@ fun Route.tourRouting() {
                 call.respond(HttpStatusCode.Created, "Created tour with id $insertedId")
             }
 
-            get {
-                repository.getAll().let {
-                    call.respond(it.map{obj -> obj.toResponse()})
-                }
-            }
-
             delete("/{id?}") {
                 val id = call.parameters["id"] ?: return@delete call.respondText(
                     text = "Missing tour id",
@@ -40,19 +35,6 @@ fun Route.tourRouting() {
                     return@delete call.respondText("Tour Deleted successfully", status = HttpStatusCode.OK)
                 }
                 return@delete call.respondText("Tour not found", status = HttpStatusCode.NotFound)
-            }
-
-            get("/{id?}") {
-                val id = call.parameters["id"]
-                if (id.isNullOrEmpty()) {
-                    return@get call.respondText(
-                        text = "Missing id",
-                        status = HttpStatusCode.BadRequest
-                    )
-                }
-                repository.findById(ObjectId(id))?.let {
-                    call.respond(it.toResponse())
-                } ?: call.respondText("No records found for id $id")
             }
 
             put("/{id?}") {
@@ -66,6 +48,36 @@ fun Route.tourRouting() {
                     text = if (updated.wasAcknowledged()) "Tour updated successfully" else updated.toString(),
                     status = if (updated.wasAcknowledged()) HttpStatusCode.OK else HttpStatusCode.InternalServerError
                 )
+            }
+        }
+    }
+
+    route("/tours") {
+        get {
+            repository.getAll().let {
+                call.respond(it.map{obj -> obj.toResponse()})
+            }
+        }
+
+        get("/{id?}") {
+            val id = call.parameters["id"]
+            if (id.isNullOrEmpty()) {
+                return@get call.respondText(
+                    text = "Missing id",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+            repository.findById(ObjectId(id))?.let {
+                call.respond(it.toResponse())
+            } ?: call.respondText("No records found for id $id")
+        }
+
+        post("/generate") {
+            val generateRequest = call.receive<GenerateRequest>()
+            val searchQuery = generateRequest.searchQuery
+
+            repository.getAll().let {
+                call.respond(it.map{obj -> obj.toResponse()}[0])
             }
         }
     }

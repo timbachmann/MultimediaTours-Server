@@ -1,6 +1,7 @@
 package de.timbachmann.api.routes
 
 
+import de.timbachmann.api.model.entity.MultimediaType
 import de.timbachmann.api.model.request.MultimediaObjectRequest
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import io.ktor.http.*
@@ -24,12 +25,6 @@ fun Route.multimediaObjectRouting() {
                 call.respond(HttpStatusCode.Created, "Created multimediaObject with id $insertedId")
             }
 
-            get {
-                repository.getAll().let {
-                    call.respond(it.map { obj -> obj.toResponse() })
-                }
-            }
-
             delete("/{id?}") {
                 val id = call.parameters["id"] ?: return@delete call.respondText(
                     text = "Missing multimediaObject id",
@@ -40,19 +35,6 @@ fun Route.multimediaObjectRouting() {
                     return@delete call.respondText("MultimediaObject Deleted successfully", status = HttpStatusCode.OK)
                 }
                 return@delete call.respondText("MultimediaObject not found", status = HttpStatusCode.NotFound)
-            }
-
-            get("/{id?}") {
-                val id = call.parameters["id"]
-                if (id.isNullOrEmpty()) {
-                    return@get call.respondText(
-                        text = "Missing id",
-                        status = HttpStatusCode.BadRequest
-                    )
-                }
-                repository.findById(ObjectId(id))?.let {
-                    call.respond(it.toResponse())
-                } ?: call.respondText("No records found for id $id", status = HttpStatusCode.NotFound)
             }
 
             put("/{id?}") {
@@ -67,19 +49,22 @@ fun Route.multimediaObjectRouting() {
                 )
             }
 
-
-            post("/upload") {
+            post("/upload/{id?}") {
+                val id = call.parameters["id"] ?: return@post call.respondText(
+                    text = "Missing multimediaObject id",
+                    status = HttpStatusCode.BadRequest
+                )
                 var path: String? = null
                 val multipartData = call.receiveMultipart()
 
                 multipartData.forEachPart {
                     when (it) {
                         is PartData.FileItem -> {
-                            val fileName = it.originalFileName as String
+                            var fileName = it.originalFileName as String
+                            fileName = id + fileName.substringAfterLast(".")
                             val bytes = it.streamProvider().readBytes()
                             path = "./multimedia/$fileName"
                             val file = path?.let { it1 -> File(it1) }
-                            //file?.mkdirs()
                             file?.writeBytes(bytes)
                         }
 
@@ -92,23 +77,48 @@ fun Route.multimediaObjectRouting() {
                     call.respondText(it, status = HttpStatusCode.OK)
                 } ?: call.respondText("Could not upload file!", status =  HttpStatusCode.InternalServerError)
             }
-
-            get("/{id?}/object") {
-                val id = call.parameters["id"]
-                if (id.isNullOrEmpty()) {
-                    return@get call.respondText(
-                        text = "Missing id",
-                        status = HttpStatusCode.BadRequest
-                    )
-                }
-                val path = repository.findById(ObjectId(id))?.data
-                path?.let {
-                    val file = File(it)
-                    call.respondFile(file)
-                }
-            }
         }
     }
 
+    route("/multimedia-objects") {
+        get {
+            repository.getAll().let {
+                call.respond(it.map { obj -> obj.toResponse() })
+            }
+        }
 
+        get("/{id?}") {
+            val id = call.parameters["id"]
+            if (id.isNullOrEmpty()) {
+                return@get call.respondText(
+                    text = "Missing id",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+            repository.findById(ObjectId(id))?.let {
+                call.respond(it.toResponse())
+            } ?: call.respondText("No records found for id $id", status = HttpStatusCode.NotFound)
+        }
+
+        get("/file/{id?}") {
+            val id = call.parameters["id"]
+            if (id.isNullOrEmpty()) {
+                return@get call.respondText(
+                    text = "Missing id",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+            val multimediaObject = repository.findById(ObjectId(id))
+            if (multimediaObject?.type !== MultimediaType.TEXT) {
+                val path = multimediaObject?.data
+                path?.let {
+                    val file = File(it)
+                    call.response.header(HttpHeaders.ContentDisposition, "attachment; filename=\"${file.name}\"")
+                    call.respondFile(file)
+                }
+            } else {
+                call.respondText("File not found or object is Type TEXT.", status = HttpStatusCode.NotFound)
+            }
+        }
+    }
 }

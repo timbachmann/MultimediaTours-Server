@@ -7,7 +7,8 @@ data class TourRequest(
     val title: String,
     val source: String,
     val multimediaObjects: List<String>,
-    val author: String
+    val author: String,
+    val tags: List<String>
 ) {
     fun toTourObject(): Tour {
         return Tour(
@@ -15,7 +16,9 @@ data class TourRequest(
             title = title,
             source = source,
             multimediaObjects = multimediaObjects.map { ObjectId(it) },
-            author = author
+            author = author,
+            tags = tags,
+            generated = false
         )
     }
 }

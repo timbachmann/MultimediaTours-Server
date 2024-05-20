@@ -10,13 +10,17 @@ data class Tour(
     val title: String,
     val source: String,
     val multimediaObjects: List<ObjectId>,
-    val author: String
+    val tags: List<String>,
+    val author: String,
+    val generated: Boolean
 ){
     fun toResponse() = TourResponse(
         id = id.toString(),
         title = title,
         source = source,
         multimediaObjects = multimediaObjects.map { it.toString() },
-        author = author
+        author = author,
+        tags = tags,
+        generated = generated
     )
 }

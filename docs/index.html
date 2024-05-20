@@ -689,6 +689,15 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+            defs["GenerateRequest"] = {
+  "required" : [ "searchQuery" ],
+  "type" : "object",
+  "properties" : {
+    "searchQuery" : {
+      "type" : "string"
+    }
+  }
+};
             defs["LoginRequest"] = {
   "required" : [ "email", "password" ],
   "type" : "object",
@@ -730,6 +739,12 @@
     },
     "date" : {
       "type" : "string"
+    },
+    "tags" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     },
     "source" : {
       "type" : "string"
@@ -822,6 +837,12 @@
     }
   }
 };
+            defs["MultimediaObjectResponseList"] = {
+  "type" : "array",
+  "items" : {
+    "$ref" : "#/components/schemas/MultimediaObjectResponse"
+  }
+};
             defs["Tour"] = {
   "required" : [ "id", "multimediaObjects", "title" ],
   "type" : "object",
@@ -837,10 +858,22 @@
       "type" : "string"
     },
     "multimediaObjects" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     },
     "author" : {
       "type" : "string"
+    },
+    "generated" : {
+      "type" : "boolean"
+    },
+    "tags" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     }
   }
 };
@@ -855,10 +888,19 @@
       "type" : "string"
     },
     "multimediaObjects" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     },
     "author" : {
       "type" : "string"
+    },
+    "tags" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     }
   }
 };
@@ -875,11 +917,29 @@
       "type" : "string"
     },
     "multimediaObjects" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     },
     "author" : {
       "type" : "string"
+    },
+    "generated" : {
+      "type" : "boolean"
+    },
+    "tags" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
     }
+  }
+};
+            defs["TourResponseList"] = {
+  "type" : "array",
+  "items" : {
+    "$ref" : "#/components/schemas/TourResponse"
   }
 };
             defs["User"] = {
@@ -900,7 +960,10 @@
       "type" : "string"
     },
     "activeSessions" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/UserSession"
+      }
     },
     "role" : {
       "type" : "string"
@@ -921,9 +984,72 @@
       "type" : "string"
     },
     "activeSessions" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/UserSession"
+      }
     },
     "role" : {
+      "type" : "string"
+    }
+  }
+};
+            defs["UserResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "string"
+    },
+    "email" : {
+      "type" : "string"
+    },
+    "password" : {
+      "type" : "string"
+    },
+    "lastLogin" : {
+      "type" : "string"
+    },
+    "activeSessions" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/UserSessionResponse"
+      }
+    },
+    "role" : {
+      "type" : "string"
+    }
+  }
+};
+            defs["UserResponseList"] = {
+  "type" : "array",
+  "items" : {
+    "$ref" : "#/components/schemas/UserResponse"
+  }
+};
+            defs["UserSession"] = {
+  "type" : "object",
+  "properties" : {
+    "token" : {
+      "type" : "string"
+    },
+    "CSRF" : {
+      "type" : "string"
+    },
+    "validTo" : {
+      "type" : "string"
+    }
+  }
+};
+            defs["UserSessionResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "token" : {
+      "type" : "string"
+    },
+    "CSRF" : {
+      "type" : "string"
+    },
+    "validTo" : {
       "type" : "string"
     }
   }
@@ -945,11 +1071,11 @@
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Files"><a href="#api-Files">API Methods - Files</a></li>
-                    <li data-group="Files" data-name="multimediaObjectsIdObjectsGet" class="">
-                      <a href="#api-Files-multimediaObjectsIdObjectsGet">multimediaObjectsIdObjectsGet</a>
+                    <li data-group="Files" data-name="multimediaObjectsFileIdGet" class="">
+                      <a href="#api-Files-multimediaObjectsFileIdGet">multimediaObjectsFileIdGet</a>
                     </li>
-                    <li data-group="Files" data-name="multimediaObjectsUploadPost" class="">
-                      <a href="#api-Files-multimediaObjectsUploadPost">multimediaObjectsUploadPost</a>
+                    <li data-group="Files" data-name="multimediaObjectsUploadIdPost" class="">
+                      <a href="#api-Files-multimediaObjectsUploadIdPost">multimediaObjectsUploadIdPost</a>
                     </li>
                   <li class="nav-header" data-group="MultimediaObjects"><a href="#api-MultimediaObjects">API Methods - MultimediaObjects</a></li>
                     <li data-group="MultimediaObjects" data-name="multimediaObjectsGet" class="">
@@ -968,6 +1094,9 @@
                       <a href="#api-MultimediaObjects-multimediaObjectsPost">multimediaObjectsPost</a>
                     </li>
                   <li class="nav-header" data-group="Tours"><a href="#api-Tours">API Methods - Tours</a></li>
+                    <li data-group="Tours" data-name="toursGeneratePost" class="">
+                      <a href="#api-Tours-toursGeneratePost">toursGeneratePost</a>
+                    </li>
                     <li data-group="Tours" data-name="toursGet" class="">
                       <a href="#api-Tours-toursGet">toursGet</a>
                     </li>
@@ -1020,10 +1149,10 @@
         <div id="sections">
                 <section id="api-Files">
                   <h1>Files</h1>
-                    <div id="api-Files-multimediaObjectsIdObjectsGet">
-                      <article id="api-Files-multimediaObjectsIdObjectsGet-0" data-group="User" data-name="multimediaObjectsIdObjectsGet" data-version="0">
+                    <div id="api-Files-multimediaObjectsFileIdGet">
+                      <article id="api-Files-multimediaObjectsFileIdGet-0" data-group="User" data-name="multimediaObjectsFileIdGet" data-version="0">
                         <div class="pull-left">
-                          <h1>multimediaObjectsIdObjectsGet</h1>
+                          <h1>multimediaObjectsFileIdGet</h1>
                           <p>Get MultimediaObject Object by ID</p>
                         </div>
                         <div class="pull-right"></div>
@@ -1032,31 +1161,31 @@
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/multimedia-objects/{id}/objects</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/multimedia-objects/file/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsIdObjectsGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Files-multimediaObjectsFileIdGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsFileIdGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Files-multimediaObjectsIdObjectsGet-0-curl">
+                          <div class="tab-pane active" id="examples-Files-multimediaObjectsFileIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: image/png,video/mp4,audio/mp3"\
-"//multimedia-objects/{id}/objects"</code></pre>
+"//multimedia-objects/file/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-java">
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1072,17 +1201,17 @@ public class FilesApiExample {
         FilesApi apiInstance = new FilesApi();
         String id = id_example; // String | 
         try {
-            byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+            byte[] result = apiInstance.multimediaObjectsFileIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
+            System.err.println("Exception when calling FilesApi#multimediaObjectsFileIdGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-android">
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.FilesApi;
 
 public class FilesApiExample {
@@ -1091,26 +1220,26 @@ public class FilesApiExample {
         FilesApi apiInstance = new FilesApi();
         String id = id_example; // String | 
         try {
-            byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+            byte[] result = apiInstance.multimediaObjectsFileIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FilesApi#multimediaObjectsIdObjectsGet");
+            System.err.println("Exception when calling FilesApi#multimediaObjectsFileIdGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-groovy">
+  <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-objc">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // 
 
 FilesApi *apiInstance = [[FilesApi alloc] init];
 
 // Get MultimediaObject Object by ID
-[apiInstance multimediaObjectsIdObjectsGetWith:id
+[apiInstance multimediaObjectsFileIdGetWith:id
               completionHandler: ^(byte[] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -1122,7 +1251,7 @@ FilesApi *apiInstance = [[FilesApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-javascript">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.FilesApi()
@@ -1135,14 +1264,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.multimediaObjectsIdObjectsGet(id, callback);
+api.multimediaObjectsFileIdGet(id, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-csharp">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1151,7 +1280,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class multimediaObjectsIdObjectsGetExample
+    public class multimediaObjectsFileIdGetExample
     {
         public void main()
         {
@@ -1162,12 +1291,12 @@ namespace Example
             try
             {
                 // Get MultimediaObject Object by ID
-                byte[] result = apiInstance.multimediaObjectsIdObjectsGet(id);
+                byte[] result = apiInstance.multimediaObjectsFileIdGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling FilesApi.multimediaObjectsIdObjectsGet: " + e.Message );
+                Debug.Print("Exception when calling FilesApi.multimediaObjectsFileIdGet: " + e.Message );
             }
         }
     }
@@ -1175,7 +1304,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-php">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -1183,15 +1312,15 @@ $api_instance = new Swagger\Client\ApiFilesApi();
 $id = id_example; // String | 
 
 try {
-    $result = $api_instance->multimediaObjectsIdObjectsGet($id);
+    $result = $api_instance->multimediaObjectsFileIdGet($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FilesApi->multimediaObjectsIdObjectsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling FilesApi->multimediaObjectsFileIdGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-perl">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FilesApi;
@@ -1200,15 +1329,15 @@ my $api_instance = WWW::SwaggerClient::FilesApi->new();
 my $id = id_example; # String | 
 
 eval { 
-    my $result = $api_instance->multimediaObjectsIdObjectsGet(id => $id);
+    my $result = $api_instance->multimediaObjectsFileIdGet(id => $id);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling FilesApi->multimediaObjectsIdObjectsGet: $@\n";
+    warn "Exception when calling FilesApi->multimediaObjectsFileIdGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsIdObjectsGet-0-python">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsFileIdGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1221,10 +1350,10 @@ id = id_example # String |
 
 try: 
     # Get MultimediaObject Object by ID
-    api_response = api_instance.multimedia_objects_id_objects_get(id)
+    api_response = api_instance.multimedia_objects_file_id_get(id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling FilesApi->multimediaObjectsIdObjectsGet: %s\n" % e)</code></pre>
+    print("Exception when calling FilesApi->multimediaObjectsFileIdGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1240,7 +1369,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_multimediaObjectsIdObjectsGet_id">
+                                      <div id="d2e199_multimediaObjectsFileIdGet_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -1266,14 +1395,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-multimediaObjectsIdObjectsGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-multimediaObjectsFileIdGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-multimediaObjectsIdObjectsGet-200-schema">
-                                  <div id='responses-multimediaObjectsIdObjectsGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-multimediaObjectsFileIdGet-200-schema">
+                                  <div id='responses-multimediaObjectsFileIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1313,14 +1442,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-multimediaObjectsIdObjectsGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-multimediaObjectsIdObjectsGet-200-schema-200');
+                                        $('#responses-multimediaObjectsFileIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-multimediaObjectsFileIdGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-multimediaObjectsIdObjectsGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-multimediaObjectsFileIdGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1335,10 +1464,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Files-multimediaObjectsUploadPost">
-                      <article id="api-Files-multimediaObjectsUploadPost-0" data-group="User" data-name="multimediaObjectsUploadPost" data-version="0">
+                    <div id="api-Files-multimediaObjectsUploadIdPost">
+                      <article id="api-Files-multimediaObjectsUploadIdPost-0" data-group="User" data-name="multimediaObjectsUploadIdPost" data-version="0">
                         <div class="pull-left">
-                          <h1>multimediaObjectsUploadPost</h1>
+                          <h1>multimediaObjectsUploadIdPost</h1>
                           <p>Upload a new Object</p>
                         </div>
                         <div class="pull-right"></div>
@@ -1347,31 +1476,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/multimedia-objects/upload</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/multimedia-objects/upload/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Files-multimediaObjectsUploadPost-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Files-multimediaObjectsUploadPost-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Files-multimediaObjectsUploadIdPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Files-multimediaObjectsUploadIdPost-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Files-multimediaObjectsUploadPost-0-curl">
+                          <div class="tab-pane active" id="examples-Files-multimediaObjectsUploadIdPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Content-Type: multipart/form-data"\
-"//multimedia-objects/upload"</code></pre>
+"//multimedia-objects/upload/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-java">
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1386,17 +1515,18 @@ public class FilesApiExample {
         
         FilesApi apiInstance = new FilesApi();
         byte[] file = file_example; // byte[] | 
+        String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsUploadPost(file);
+            apiInstance.multimediaObjectsUploadIdPost(file, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadPost");
+            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadIdPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-android">
+                          <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.FilesApi;
 
 public class FilesApiExample {
@@ -1404,26 +1534,29 @@ public class FilesApiExample {
     public static void main(String[] args) {
         FilesApi apiInstance = new FilesApi();
         byte[] file = file_example; // byte[] | 
+        String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsUploadPost(file);
+            apiInstance.multimediaObjectsUploadIdPost(file, id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadPost");
+            System.err.println("Exception when calling FilesApi#multimediaObjectsUploadIdPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-groovy">
+  <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-objc">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">byte[] *file = file_example; // 
+String *id = id_example; // 
 
 FilesApi *apiInstance = [[FilesApi alloc] init];
 
 // Upload a new Object
-[apiInstance multimediaObjectsUploadPostWith:file
+[apiInstance multimediaObjectsUploadIdPostWith:file
+    id:id
               completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -1432,11 +1565,12 @@ FilesApi *apiInstance = [[FilesApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-javascript">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
 
 var api = new MultimediaToursApi.FilesApi()
 var file = file_example; // {{byte[]}} 
+var id = id_example; // {{String}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -1445,14 +1579,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.multimediaObjectsUploadPost(file, callback);
+api.multimediaObjectsUploadIdPost(fileid, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-angular">
+                            <!--<div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-csharp">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1461,22 +1595,23 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class multimediaObjectsUploadPostExample
+    public class multimediaObjectsUploadIdPostExample
     {
         public void main()
         {
 
             var apiInstance = new FilesApi();
             var file = file_example;  // byte[] | 
+            var id = id_example;  // String | 
 
             try
             {
                 // Upload a new Object
-                apiInstance.multimediaObjectsUploadPost(file);
+                apiInstance.multimediaObjectsUploadIdPost(file, id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling FilesApi.multimediaObjectsUploadPost: " + e.Message );
+                Debug.Print("Exception when calling FilesApi.multimediaObjectsUploadIdPost: " + e.Message );
             }
         }
     }
@@ -1484,38 +1619,40 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-php">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiFilesApi();
 $file = file_example; // byte[] | 
+$id = id_example; // String | 
 
 try {
-    $api_instance->multimediaObjectsUploadPost($file);
+    $api_instance->multimediaObjectsUploadIdPost($file, $id);
 } catch (Exception $e) {
-    echo 'Exception when calling FilesApi->multimediaObjectsUploadPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling FilesApi->multimediaObjectsUploadIdPost: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-perl">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FilesApi;
 
 my $api_instance = WWW::SwaggerClient::FilesApi->new();
 my $file = file_example; # byte[] | 
+my $id = id_example; # String | 
 
 eval { 
-    $api_instance->multimediaObjectsUploadPost(file => $file);
+    $api_instance->multimediaObjectsUploadIdPost(file => $file, id => $id);
 };
 if ($@) {
-    warn "Exception when calling FilesApi->multimediaObjectsUploadPost: $@\n";
+    warn "Exception when calling FilesApi->multimediaObjectsUploadIdPost: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadPost-0-python">
+                            <div class="tab-pane" id="examples-Files-multimediaObjectsUploadIdPost-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1525,17 +1662,44 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.FilesApi()
 file = file_example # byte[] | 
+id = id_example # String | 
 
 try: 
     # Upload a new Object
-    api_instance.multimedia_objects_upload_post(file)
+    api_instance.multimedia_objects_upload_id_post(file, id)
 except ApiException as e:
-    print("Exception when calling FilesApi->multimediaObjectsUploadPost: %s\n" % e)</code></pre>
+    print("Exception when calling FilesApi->multimediaObjectsUploadIdPost: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
                           <h2>Parameters</h2>
 
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_multimediaObjectsUploadIdPost_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
 
 
 
@@ -1549,7 +1713,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_multimediaObjectsUploadPost_file">
+                                      <div id="d2e199_multimediaObjectsUploadIdPost_file">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -1644,7 +1808,8 @@ public class MultimediaObjectsApiExample {
         
         MultimediaObjectsApi apiInstance = new MultimediaObjectsApi();
         try {
-            apiInstance.multimediaObjectsGet();
+            MultimediaObjectResponseList result = apiInstance.multimediaObjectsGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsGet");
             e.printStackTrace();
@@ -1661,7 +1826,8 @@ public class MultimediaObjectsApiExample {
     public static void main(String[] args) {
         MultimediaObjectsApi apiInstance = new MultimediaObjectsApi();
         try {
-            apiInstance.multimediaObjectsGet();
+            MultimediaObjectResponseList result = apiInstance.multimediaObjectsGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsGet");
             e.printStackTrace();
@@ -1679,7 +1845,10 @@ MultimediaObjectsApi *apiInstance = [[MultimediaObjectsApi alloc] init];
 
 // Retrieve all MultimediaObjects
 [apiInstance multimediaObjectsGetWithCompletionHandler: 
-              ^(NSError* error) {
+              ^(MultimediaObjectResponseList output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -1695,7 +1864,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.multimediaObjectsGet(callback);
@@ -1724,7 +1893,8 @@ namespace Example
             try
             {
                 // Retrieve all MultimediaObjects
-                apiInstance.multimediaObjectsGet();
+                MultimediaObjectResponseList result = apiInstance.multimediaObjectsGet();
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -1743,7 +1913,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\ApiMultimediaObjectsApi();
 
 try {
-    $api_instance->multimediaObjectsGet();
+    $result = $api_instance->multimediaObjectsGet();
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MultimediaObjectsApi->multimediaObjectsGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -1758,7 +1929,8 @@ use WWW::SwaggerClient::MultimediaObjectsApi;
 my $api_instance = WWW::SwaggerClient::MultimediaObjectsApi->new();
 
 eval { 
-    $api_instance->multimediaObjectsGet();
+    my $result = $api_instance->multimediaObjectsGet();
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling MultimediaObjectsApi->multimediaObjectsGet: $@\n";
@@ -1777,7 +1949,8 @@ api_instance = swagger_client.MultimediaObjectsApi()
 
 try: 
     # Retrieve all MultimediaObjects
-    api_instance.multimedia_objects_get()
+    api_response = api_instance.multimedia_objects_get()
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling MultimediaObjectsApi->multimediaObjectsGet: %s\n" % e)</code></pre>
                             </div>
@@ -1794,9 +1967,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-multimediaObjectsGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-multimediaObjectsGet-200-schema">
+                                  <div id='responses-multimediaObjectsGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/MultimediaObjectResponseList"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-multimediaObjectsGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-multimediaObjectsGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-multimediaObjectsGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - MultimediaObjects not found </h3>
@@ -2121,7 +2334,8 @@ public class MultimediaObjectsApiExample {
         MultimediaObjectsApi apiInstance = new MultimediaObjectsApi();
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdGet(id);
+            MultimediaObjectResponse result = apiInstance.multimediaObjectsIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdGet");
             e.printStackTrace();
@@ -2139,7 +2353,8 @@ public class MultimediaObjectsApiExample {
         MultimediaObjectsApi apiInstance = new MultimediaObjectsApi();
         String id = id_example; // String | 
         try {
-            apiInstance.multimediaObjectsIdGet(id);
+            MultimediaObjectResponse result = apiInstance.multimediaObjectsIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MultimediaObjectsApi#multimediaObjectsIdGet");
             e.printStackTrace();
@@ -2158,7 +2373,10 @@ MultimediaObjectsApi *apiInstance = [[MultimediaObjectsApi alloc] init];
 
 // Retrieve a MultimediaObject by ID
 [apiInstance multimediaObjectsIdGetWith:id
-              completionHandler: ^(NSError* error) {
+              completionHandler: ^(MultimediaObjectResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -2176,7 +2394,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.multimediaObjectsIdGet(id, callback);
@@ -2206,7 +2424,8 @@ namespace Example
             try
             {
                 // Retrieve a MultimediaObject by ID
-                apiInstance.multimediaObjectsIdGet(id);
+                MultimediaObjectResponse result = apiInstance.multimediaObjectsIdGet(id);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -2226,7 +2445,8 @@ $api_instance = new Swagger\Client\ApiMultimediaObjectsApi();
 $id = id_example; // String | 
 
 try {
-    $api_instance->multimediaObjectsIdGet($id);
+    $result = $api_instance->multimediaObjectsIdGet($id);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MultimediaObjectsApi->multimediaObjectsIdGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -2242,7 +2462,8 @@ my $api_instance = WWW::SwaggerClient::MultimediaObjectsApi->new();
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->multimediaObjectsIdGet(id => $id);
+    my $result = $api_instance->multimediaObjectsIdGet(id => $id);
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling MultimediaObjectsApi->multimediaObjectsIdGet: $@\n";
@@ -2262,7 +2483,8 @@ id = id_example # String |
 
 try: 
     # Retrieve a MultimediaObject by ID
-    api_instance.multimedia_objects_id_get(id)
+    api_response = api_instance.multimedia_objects_id_get(id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling MultimediaObjectsApi->multimediaObjectsIdGet: %s\n" % e)</code></pre>
                             </div>
@@ -2305,9 +2527,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-multimediaObjectsIdGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-multimediaObjectsIdGet-200-schema">
+                                  <div id='responses-multimediaObjectsIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/MultimediaObjectResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-multimediaObjectsIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-multimediaObjectsIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-multimediaObjectsIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - MultimediaObject not found </h3>
@@ -2905,6 +3167,325 @@ except ApiException as e:
                   </section>
                 <section id="api-Tours">
                   <h1>Tours</h1>
+                    <div id="api-Tours-toursGeneratePost">
+                      <article id="api-Tours-toursGeneratePost-0" data-group="User" data-name="toursGeneratePost" data-version="0">
+                        <div class="pull-left">
+                          <h1>toursGeneratePost</h1>
+                          <p>Generate a new tour</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/tours/generate</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Tours-toursGeneratePost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Tours-toursGeneratePost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Tours-toursGeneratePost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Tours-toursGeneratePost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Tours-toursGeneratePost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"//tours/generate"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ToursApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ToursApiExample {
+
+    public static void main(String[] args) {
+        
+        ToursApi apiInstance = new ToursApi();
+        GenerateRequest body = ; // GenerateRequest | 
+        try {
+            TourResponse result = apiInstance.toursGeneratePost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ToursApi#toursGeneratePost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ToursApi;
+
+public class ToursApiExample {
+
+    public static void main(String[] args) {
+        ToursApi apiInstance = new ToursApi();
+        GenerateRequest body = ; // GenerateRequest | 
+        try {
+            TourResponse result = apiInstance.toursGeneratePost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ToursApi#toursGeneratePost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">GenerateRequest *body = ; // 
+
+ToursApi *apiInstance = [[ToursApi alloc] init];
+
+// Generate a new tour
+[apiInstance toursGeneratePostWith:body
+              completionHandler: ^(TourResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MultimediaToursApi = require('multimedia_tours_api');
+
+var api = new MultimediaToursApi.ToursApi()
+var body = ; // {{GenerateRequest}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.toursGeneratePost(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Tours-toursGeneratePost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class toursGeneratePostExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new ToursApi();
+            var body = new GenerateRequest(); // GenerateRequest | 
+
+            try
+            {
+                // Generate a new tour
+                TourResponse result = apiInstance.toursGeneratePost(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ToursApi.toursGeneratePost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiToursApi();
+$body = ; // GenerateRequest | 
+
+try {
+    $result = $api_instance->toursGeneratePost($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ToursApi->toursGeneratePost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ToursApi;
+
+my $api_instance = WWW::SwaggerClient::ToursApi->new();
+my $body = WWW::SwaggerClient::Object::GenerateRequest->new(); # GenerateRequest | 
+
+eval { 
+    my $result = $api_instance->toursGeneratePost(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ToursApi->toursGeneratePost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Tours-toursGeneratePost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.ToursApi()
+body =  # GenerateRequest | 
+
+try: 
+    # Generate a new tour
+    api_response = api_instance.tours_generate_post(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ToursApi->toursGeneratePost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GenerateRequest"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_toursGeneratePost_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_toursGeneratePost_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Tour generated successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-toursGeneratePost-201-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-toursGeneratePost-201-schema">
+                                  <div id='responses-toursGeneratePost-201-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Tour generated successfully",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/TourResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-toursGeneratePost-201-schema-data').val(stringify(schema));
+                                        var result = $('#responses-toursGeneratePost-201-schema-201');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-toursGeneratePost-201-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Bad request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Tours-toursGet">
                       <article id="api-Tours-toursGet-0" data-group="User" data-name="toursGet" data-version="0">
                         <div class="pull-left">
@@ -2956,7 +3537,8 @@ public class ToursApiExample {
         
         ToursApi apiInstance = new ToursApi();
         try {
-            apiInstance.toursGet();
+            TourResponseList result = apiInstance.toursGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ToursApi#toursGet");
             e.printStackTrace();
@@ -2973,7 +3555,8 @@ public class ToursApiExample {
     public static void main(String[] args) {
         ToursApi apiInstance = new ToursApi();
         try {
-            apiInstance.toursGet();
+            TourResponseList result = apiInstance.toursGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ToursApi#toursGet");
             e.printStackTrace();
@@ -2991,7 +3574,10 @@ ToursApi *apiInstance = [[ToursApi alloc] init];
 
 // Retrieve all Tours
 [apiInstance toursGetWithCompletionHandler: 
-              ^(NSError* error) {
+              ^(TourResponseList output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -3007,7 +3593,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.toursGet(callback);
@@ -3036,7 +3622,8 @@ namespace Example
             try
             {
                 // Retrieve all Tours
-                apiInstance.toursGet();
+                TourResponseList result = apiInstance.toursGet();
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -3055,7 +3642,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\ApiToursApi();
 
 try {
-    $api_instance->toursGet();
+    $result = $api_instance->toursGet();
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ToursApi->toursGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -3070,7 +3658,8 @@ use WWW::SwaggerClient::ToursApi;
 my $api_instance = WWW::SwaggerClient::ToursApi->new();
 
 eval { 
-    $api_instance->toursGet();
+    my $result = $api_instance->toursGet();
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling ToursApi->toursGet: $@\n";
@@ -3089,7 +3678,8 @@ api_instance = swagger_client.ToursApi()
 
 try: 
     # Retrieve all Tours
-    api_instance.tours_get()
+    api_response = api_instance.tours_get()
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ToursApi->toursGet: %s\n" % e)</code></pre>
                             </div>
@@ -3106,9 +3696,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-toursGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-toursGet-200-schema">
+                                  <div id='responses-toursGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/TourResponseList"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-toursGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-toursGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-toursGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - Tours not found </h3>
@@ -3433,7 +4063,8 @@ public class ToursApiExample {
         ToursApi apiInstance = new ToursApi();
         String id = id_example; // String | 
         try {
-            apiInstance.toursIdGet(id);
+            TourResponse result = apiInstance.toursIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ToursApi#toursIdGet");
             e.printStackTrace();
@@ -3451,7 +4082,8 @@ public class ToursApiExample {
         ToursApi apiInstance = new ToursApi();
         String id = id_example; // String | 
         try {
-            apiInstance.toursIdGet(id);
+            TourResponse result = apiInstance.toursIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ToursApi#toursIdGet");
             e.printStackTrace();
@@ -3470,7 +4102,10 @@ ToursApi *apiInstance = [[ToursApi alloc] init];
 
 // Retrieve a Tour by ID
 [apiInstance toursIdGetWith:id
-              completionHandler: ^(NSError* error) {
+              completionHandler: ^(TourResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -3488,7 +4123,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.toursIdGet(id, callback);
@@ -3518,7 +4153,8 @@ namespace Example
             try
             {
                 // Retrieve a Tour by ID
-                apiInstance.toursIdGet(id);
+                TourResponse result = apiInstance.toursIdGet(id);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -3538,7 +4174,8 @@ $api_instance = new Swagger\Client\ApiToursApi();
 $id = id_example; // String | 
 
 try {
-    $api_instance->toursIdGet($id);
+    $result = $api_instance->toursIdGet($id);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ToursApi->toursIdGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -3554,7 +4191,8 @@ my $api_instance = WWW::SwaggerClient::ToursApi->new();
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->toursIdGet(id => $id);
+    my $result = $api_instance->toursIdGet(id => $id);
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling ToursApi->toursIdGet: $@\n";
@@ -3574,7 +4212,8 @@ id = id_example # String |
 
 try: 
     # Retrieve a Tour by ID
-    api_instance.tours_id_get(id)
+    api_response = api_instance.tours_id_get(id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling ToursApi->toursIdGet: %s\n" % e)</code></pre>
                             </div>
@@ -3617,9 +4256,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-toursIdGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-toursIdGet-200-schema">
+                                  <div id='responses-toursIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/TourResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-toursIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-toursIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-toursIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - Tour not found </h3>
@@ -4268,7 +4947,8 @@ public class UsersApiExample {
         
         UsersApi apiInstance = new UsersApi();
         try {
-            apiInstance.usersGet();
+            UserResponseList result = apiInstance.usersGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#usersGet");
             e.printStackTrace();
@@ -4285,7 +4965,8 @@ public class UsersApiExample {
     public static void main(String[] args) {
         UsersApi apiInstance = new UsersApi();
         try {
-            apiInstance.usersGet();
+            UserResponseList result = apiInstance.usersGet();
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#usersGet");
             e.printStackTrace();
@@ -4303,7 +4984,10 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Retrieve all Users
 [apiInstance usersGetWithCompletionHandler: 
-              ^(NSError* error) {
+              ^(UserResponseList output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -4319,7 +5003,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.usersGet(callback);
@@ -4348,7 +5032,8 @@ namespace Example
             try
             {
                 // Retrieve all Users
-                apiInstance.usersGet();
+                UserResponseList result = apiInstance.usersGet();
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -4367,7 +5052,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\ApiUsersApi();
 
 try {
-    $api_instance->usersGet();
+    $result = $api_instance->usersGet();
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersApi->usersGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -4382,7 +5068,8 @@ use WWW::SwaggerClient::UsersApi;
 my $api_instance = WWW::SwaggerClient::UsersApi->new();
 
 eval { 
-    $api_instance->usersGet();
+    my $result = $api_instance->usersGet();
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling UsersApi->usersGet: $@\n";
@@ -4401,7 +5088,8 @@ api_instance = swagger_client.UsersApi()
 
 try: 
     # Retrieve all Users
-    api_instance.users_get()
+    api_response = api_instance.users_get()
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling UsersApi->usersGet: %s\n" % e)</code></pre>
                             </div>
@@ -4418,9 +5106,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-usersGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-usersGet-200-schema">
+                                  <div id='responses-usersGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserResponseList"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-usersGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-usersGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-usersGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - Users not found </h3>
@@ -4745,7 +5473,8 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         String id = id_example; // String | 
         try {
-            apiInstance.usersIdGet(id);
+            UserResponse result = apiInstance.usersIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#usersIdGet");
             e.printStackTrace();
@@ -4763,7 +5492,8 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         String id = id_example; // String | 
         try {
-            apiInstance.usersIdGet(id);
+            UserResponse result = apiInstance.usersIdGet(id);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#usersIdGet");
             e.printStackTrace();
@@ -4782,7 +5512,10 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Retrieve a User by ID
 [apiInstance usersIdGetWith:id
-              completionHandler: ^(NSError* error) {
+              completionHandler: ^(UserResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -4800,7 +5533,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 api.usersIdGet(id, callback);
@@ -4830,7 +5563,8 @@ namespace Example
             try
             {
                 // Retrieve a User by ID
-                apiInstance.usersIdGet(id);
+                UserResponse result = apiInstance.usersIdGet(id);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -4850,7 +5584,8 @@ $api_instance = new Swagger\Client\ApiUsersApi();
 $id = id_example; // String | 
 
 try {
-    $api_instance->usersIdGet($id);
+    $result = $api_instance->usersIdGet($id);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersApi->usersIdGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -4866,7 +5601,8 @@ my $api_instance = WWW::SwaggerClient::UsersApi->new();
 my $id = id_example; # String | 
 
 eval { 
-    $api_instance->usersIdGet(id => $id);
+    my $result = $api_instance->usersIdGet(id => $id);
+    print Dumper($result);
 };
 if ($@) {
     warn "Exception when calling UsersApi->usersIdGet: $@\n";
@@ -4886,7 +5622,8 @@ id = id_example # String |
 
 try: 
     # Retrieve a User by ID
-    api_instance.users_id_get(id)
+    api_response = api_instance.users_id_get(id)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling UsersApi->usersIdGet: %s\n" % e)</code></pre>
                             </div>
@@ -4929,9 +5666,49 @@ except ApiException as e:
                             <h3> Status: 200 - Successful response </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-usersIdGet-200-schema">Schema</a>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-usersIdGet-200-schema">
+                                  <div id='responses-usersIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-usersIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-usersIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-usersIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
                             </div>
 
                             <h3> Status: 404 - User not found </h3>

@@ -12,6 +12,7 @@ data class MultimediaObjectRequest(
     val date: String,
     val source: String,
     val position: MultimediaObjectPosition?,
+    val tags: List<String>,
     val data: String,
     val author: String
 ) {
@@ -24,7 +25,8 @@ data class MultimediaObjectRequest(
             source = source,
             position = position,
             data = data,
-            author = author
+            author = author,
+            tags = tags
         )
     }
 }

@@ -27,7 +27,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/MultimediaObjectResponseList'
         '404':
           description: MultimediaObjects not found
       tags:
@@ -46,7 +47,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/MultimediaObjectResponse'
         '404':
           description: MultimediaObject not found
       tags:
@@ -91,10 +93,15 @@ paths:
           description: MultimediaObject not found
       tags:
         - Multimedia Objects
-
-  /multimedia-objects/upload:
+  /multimedia-objects/upload/{id}:
     post:
       summary: Upload a new Object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -112,7 +119,7 @@ paths:
           description: Bad request
       tags:
         - Files
-  /multimedia-objects/{id}/objects:
+  /multimedia-objects/file/{id}:
     get:
       summary: Get MultimediaObject Object by ID
       parameters:
@@ -165,7 +172,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/TourResponseList'
         '404':
           description: Tours not found
       tags:
@@ -184,7 +192,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/TourResponse'
         '404':
           description: Tour not found
       tags:
@@ -229,6 +238,26 @@ paths:
           description: Tour not found
       tags:
         - Tours
+  /tours/generate:
+    post:
+      summary: Generate a new tour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateRequest'
+      responses:
+        '201':
+          description: Tour generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TourResponse'
+        '400':
+          description: Bad request
+      tags:
+        - Tours
   /users:
     post:
       summary: Create a new user
@@ -252,7 +281,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/UserResponseList'
         '404':
           description: Users not found
       tags:
@@ -271,7 +301,8 @@ paths:
           description: Successful response
           content:
             application/json:
-              example: { }
+              schema:
+                $ref: '#/components/schemas/UserResponse'
         '404':
           description: User not found
       tags:
@@ -316,6 +347,7 @@ paths:
           description: User not found
       tags:
         - Users
+
 components:
   schemas:
     MultimediaObject:
@@ -333,6 +365,10 @@ components:
           type: string
         date:
           type: string
+        tags:
+          type: array
+          items:
+            type: string
         source:
           type: string
         position:
@@ -386,6 +422,11 @@ components:
         - type
         - data
 
+    MultimediaObjectResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MultimediaObjectResponse'
+
     MultimediaObjectResponse:
       type: object
       properties:
@@ -419,8 +460,17 @@ components:
           type: string
         multimediaObjects:
           type: array
+          items:
+            type: string
         author:
           type: string
+        generated:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+
       required:
         - id
         - title
@@ -435,12 +485,31 @@ components:
           type: string
         multimediaObjects:
           type: array
+          items:
+            type: string
         author:
           type: string
+        tags:
+          type: array
+          items:
+            type: string
       required:
         - id
         - title
         - multimediaObjects
+
+    GenerateRequest:
+      type: object
+      properties:
+        searchQuery:
+          type: string
+      required:
+        - searchQuery
+
+    TourResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TourResponse'
 
     TourResponse:
       type: object
@@ -453,8 +522,16 @@ components:
           type: string
         multimediaObjects:
           type: array
+          items:
+            type: string
         author:
           type: string
+        generated:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
 
     LoginRequest:
       type: object
@@ -489,6 +566,8 @@ components:
           type: string
         activeSessions:
           type: array
+          items:
+            $ref: '#/components/schemas/UserSession'
         role:
           type: string
       required:
@@ -507,8 +586,53 @@ components:
           type: string
         activeSessions:
           type: array
+          items:
+            $ref: '#/components/schemas/UserSession'
         role:
           type: string
       required:
         - email
         - password
+
+    UserResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserResponse'
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        lastLogin:
+          type: string
+        activeSessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSessionResponse'
+        role:
+          type: string
+
+    UserSession:
+      type: object
+      properties:
+        token:
+          type: string
+        CSRF:
+          type: string
+        validTo:
+          type: string
+
+    UserSessionResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        CSRF:
+          type: string
+        validTo:
+          type: string

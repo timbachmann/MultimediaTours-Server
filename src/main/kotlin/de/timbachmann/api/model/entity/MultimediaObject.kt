@@ -11,6 +11,7 @@ data class MultimediaObject(
     val title: String,
     val date: String,
     val source: String,
+    val tags: List<String>,
     val position: MultimediaObjectPosition?,
     val data: String,
     val author: String
@@ -20,6 +21,7 @@ data class MultimediaObject(
         type = type,
         title = title,
         date = date,
+        tags = tags,
         source = source,
         position = position,
         data = data,
