@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.22"
     id("io.ktor.plugin") version "2.3.8"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+    id("org.openapi.generator") version "7.6.0"
 }
 
 group = "de.timbachmann"
@@ -50,7 +51,33 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("org.apache.commons:commons-lang3:3.14.0")
 
+    //vitrivr
+    implementation("org.vitrivr:cottontaildb-client:0.16.6")
+    implementation("io.grpc:grpc-core:1.60.0")
+    implementation("com.google.protobuf:protobuf-java:3.25.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.moshi:moshi:1.15.1")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+
     // Tests
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+}
+
+openApiGenerate {
+    inputSpec.set("$rootDir/resources/openapi/openapi-specs.json")
+    generatorName.set("kotlin")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("${buildDir}/generate-resources/main/src")
+        }
+    }
+}
+
+tasks.compileKotlin {
+    dependsOn("openApiGenerate")
 }

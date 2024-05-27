@@ -1,6 +1,5 @@
 package de.timbachmann.api.routes
 
-import de.timbachmann.api.model.entity.Tour
 import de.timbachmann.api.model.request.GenerateRequest
 import de.timbachmann.api.model.request.TourRequest
 import de.timbachmann.api.repository.interfaces.TourRepositoryInterface

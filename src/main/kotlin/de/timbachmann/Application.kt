@@ -16,4 +16,5 @@ fun Application.module() {
     configureSerialization()
     configureDatabase()
     configureRouting()
+    configureCottontail()
 }

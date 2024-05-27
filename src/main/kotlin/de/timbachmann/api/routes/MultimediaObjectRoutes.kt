@@ -1,9 +1,11 @@
 package de.timbachmann.api.routes
 
 
+import de.timbachmann.api.model.entity.MultimediaObject
 import de.timbachmann.api.model.entity.MultimediaType
 import de.timbachmann.api.model.request.MultimediaObjectRequest
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
+import de.timbachmann.plugins.exportTagsToCottontail
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -13,6 +15,11 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
+import org.openapitools.client.apis.SessionApi
+import org.openapitools.client.models.ExtractionContainerMessage
+import org.openapitools.client.models.ExtractionItemContainer
+import org.openapitools.client.models.MediaObjectDescriptor
+import org.openapitools.client.models.MediaObjectMetadataDescriptor
 import java.io.File
 
 fun Route.multimediaObjectRouting() {
@@ -61,20 +68,22 @@ fun Route.multimediaObjectRouting() {
                     when (it) {
                         is PartData.FileItem -> {
                             var fileName = it.originalFileName as String
-                            fileName = id + fileName.substringAfterLast(".")
+                            fileName = "$id.${fileName.substringAfterLast(".")}"
                             val bytes = it.streamProvider().readBytes()
                             path = "./multimedia/$fileName"
                             val file = path?.let { it1 -> File(it1) }
                             file?.writeBytes(bytes)
                         }
-
                         else -> {}
                     }
                     it.dispose()
                 }
 
-                path?.let {
-                    call.respondText(it, status = HttpStatusCode.OK)
+                path?.let { path ->
+                    repository.findById(ObjectId(id))?.let { mmObject ->
+                        extractWithCineast(id, mmObject, path)
+                    }
+                    call.respondText(path, status = HttpStatusCode.OK)
                 } ?: call.respondText("Could not upload file!", status =  HttpStatusCode.InternalServerError)
             }
         }
@@ -121,4 +130,34 @@ fun Route.multimediaObjectRouting() {
             }
         }
     }
+}
+
+fun extractWithCineast(id: String, mmObject: MultimediaObject, filePath: String) {
+    val sessionApi = SessionApi("http://localhost:4567")
+    sessionApi.startExtraction()
+
+    val metadata = mmObject.position?.let { position ->
+        listOf(
+            MediaObjectMetadataDescriptor("i_$id", "LOCATION", "LATITUDE", position.lat.toString()),
+            MediaObjectMetadataDescriptor("i_$id", "LOCATION", "LONGITUDE", position.lng.toString()),
+        )
+    }
+
+    val fileName = filePath.split("/").last()
+    val fileUri = File(filePath.substring(2)).toURI()
+
+    val type = when(mmObject.type) {
+        MultimediaType.VIDEO -> MediaObjectDescriptor.Mediatype.VIDEO
+        MultimediaType.AUDIO -> MediaObjectDescriptor.Mediatype.AUDIO
+        MultimediaType.IMAGE -> MediaObjectDescriptor.Mediatype.IMAGE
+        else -> null
+    }
+    
+    val extractionContainer = ExtractionItemContainer(MediaObjectDescriptor("i_$id", fileName, fileName, type, false), metadata, fileUri.toString())
+    val extractionContainerMessage = ExtractionContainerMessage(listOf(extractionContainer))
+
+    sessionApi.extractItem(extractionContainerMessage)
+    sessionApi.stopExtraction()
+
+    exportTagsToCottontail(id, tags = mmObject.tags)
 }
