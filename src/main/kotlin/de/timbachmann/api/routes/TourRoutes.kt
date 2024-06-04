@@ -9,8 +9,12 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.util.*
 import org.bson.types.ObjectId
 import org.koin.ktor.ext.inject
+import org.openapitools.client.apis.SegmentsApi
+import org.openapitools.client.models.QueryTerm
+import org.openapitools.client.models.SimilarityQuery
 
 fun Route.tourRouting() {
 
@@ -74,6 +78,12 @@ fun Route.tourRouting() {
         post("/generate") {
             val generateRequest = call.receive<GenerateRequest>()
             val searchQuery = generateRequest.searchQuery
+
+            val queryTermEmbedding = QueryTerm(listOf("visualtexcoembedding"), QueryTerm.Type.TEXT, searchQuery)
+            val queryTermTags = QueryTerm(listOf("tags"), QueryTerm.Type.TEXT, searchQuery.encodeBase64())
+            val similarityQuery = SimilarityQuery(listOf(queryTermEmbedding, queryTermTags))
+            val segmentsApi = SegmentsApi("http://localhost:4567")
+            val similarityQueryResultBatch = segmentsApi.findSegmentSimilar(similarityQuery)
 
             repository.getAll().let {
                 call.respond(it.map{obj -> obj.toResponse()}[0])
