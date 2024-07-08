@@ -54,6 +54,9 @@ fun Route.multimediaObjectRouting() {
                     text = if (updated.wasAcknowledged()) "MultimediaObject updated successfully" else updated.toString(),
                     status = if (updated.wasAcknowledged()) HttpStatusCode.OK else HttpStatusCode.InternalServerError
                 )
+                repository.findById(ObjectId(id))?.let { mmObject ->
+                    exportTagsToCottontail(id, tags = mmObject.tags, type = mmObject.type)
+                }
             }
 
             post("/upload/{id?}") {
@@ -70,7 +73,7 @@ fun Route.multimediaObjectRouting() {
                             var fileName = it.originalFileName as String
                             fileName = "$id.${fileName.substringAfterLast(".")}"
                             val bytes = it.streamProvider().readBytes()
-                            path = "./multimedia/$fileName"
+                            path = "./../Content/media/$fileName"
                             val file = path?.let { it1 -> File(it1) }
                             file?.writeBytes(bytes)
                         }
@@ -136,13 +139,6 @@ fun extractWithCineast(id: String, mmObject: MultimediaObject, filePath: String)
     val sessionApi = SessionApi("http://localhost:4567")
     sessionApi.startExtraction()
 
-    val metadata = mmObject.position?.let { position ->
-        listOf(
-            MediaObjectMetadataDescriptor("i_$id", "LOCATION", "LATITUDE", position.lat.toString()),
-            MediaObjectMetadataDescriptor("i_$id", "LOCATION", "LONGITUDE", position.lng.toString()),
-        )
-    }
-
     val fileName = filePath.split("/").last()
     val fileUri = File(filePath.substring(2)).toURI()
 
@@ -152,12 +148,28 @@ fun extractWithCineast(id: String, mmObject: MultimediaObject, filePath: String)
         MultimediaType.IMAGE -> MediaObjectDescriptor.Mediatype.IMAGE
         else -> null
     }
-    
-    val extractionContainer = ExtractionItemContainer(MediaObjectDescriptor("i_$id", fileName, fileName, type, false), metadata, fileUri.toString())
-    val extractionContainerMessage = ExtractionContainerMessage(listOf(extractionContainer))
 
-    sessionApi.extractItem(extractionContainerMessage)
+    val prefix = when(mmObject.type) {
+        MultimediaType.AUDIO -> "a"
+        MultimediaType.VIDEO -> "v"
+        MultimediaType.IMAGE -> "i"
+        else -> null
+    }
+
+    if (prefix != null ) {
+        val metadata = mmObject.position?.let { position ->
+            listOf(
+                MediaObjectMetadataDescriptor("${prefix}_$id", "LOCATION", "LATITUDE", position.lat.toString()),
+                MediaObjectMetadataDescriptor("${prefix}_$id", "LOCATION", "LONGITUDE", position.lng.toString()),
+            )
+        }
+
+        val extractionContainer = ExtractionItemContainer(MediaObjectDescriptor("${prefix}_$id", fileName, fileName, type, false), metadata, fileUri.toString())
+        val extractionContainerMessage = ExtractionContainerMessage(listOf(extractionContainer))
+
+        sessionApi.extractItem(extractionContainerMessage)
+    }
     sessionApi.stopExtraction()
 
-    exportTagsToCottontail(id, tags = mmObject.tags)
+    exportTagsToCottontail(id, tags = mmObject.tags, type = mmObject.type)
 }

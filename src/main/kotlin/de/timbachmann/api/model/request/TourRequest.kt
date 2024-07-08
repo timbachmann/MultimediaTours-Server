@@ -21,4 +21,16 @@ data class TourRequest(
             generated = false
         )
     }
+
+    fun toTourObjectGenerated(): Tour {
+        return Tour(
+            id = ObjectId(),
+            title = title,
+            source = source,
+            multimediaObjects = multimediaObjects.map { ObjectId(it) },
+            author = author,
+            tags = tags,
+            generated = true
+        )
+    }
 }

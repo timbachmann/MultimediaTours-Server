@@ -60,7 +60,8 @@ class MultimediaObjectRepository(private val mongoDatabase: MongoDatabase) : Mul
             if (multimediaObject.position !== null) { Updates.set(MultimediaObject::position.name, multimediaObject.position) }
             else { Updates.unset(MultimediaObject::position.name) },
             Updates.set(MultimediaObject::data.name, multimediaObject.data),
-            Updates.set(MultimediaObject::author.name, multimediaObject.author)
+            Updates.set(MultimediaObject::author.name, multimediaObject.author),
+            Updates.set(MultimediaObject::tags.name, multimediaObject.tags)
         )
         val options = UpdateOptions().upsert(true)
         val result =

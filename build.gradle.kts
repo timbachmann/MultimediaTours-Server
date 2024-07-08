@@ -51,9 +51,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.14.0")
 
     //vitrivr
-    implementation("org.vitrivr:cottontaildb-client:0.16.6")
-    implementation("io.grpc:grpc-core:1.60.0")
-    implementation("com.google.protobuf:protobuf-java:3.25.1")
+    implementation("org.vitrivr:cottontaildb-proto:0.15.0")
+    implementation("io.grpc:grpc-all:1.51.1")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.moshi:moshi:1.15.1")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
