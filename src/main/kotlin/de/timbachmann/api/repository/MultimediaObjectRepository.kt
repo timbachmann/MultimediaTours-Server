@@ -7,11 +7,11 @@ import com.mongodb.client.model.Updates
 import com.mongodb.client.result.UpdateResult
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import de.timbachmann.api.model.entity.MultimediaObject
-import de.timbachmann.api.model.entity.User
 import de.timbachmann.api.repository.interfaces.MultimediaObjectRepositoryInterface
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
-import org.bson.BsonValue
+import org.bson.BsonObjectId
+
 import org.bson.types.ObjectId
 
 class MultimediaObjectRepository(private val mongoDatabase: MongoDatabase) : MultimediaObjectRepositoryInterface {
@@ -20,12 +20,12 @@ class MultimediaObjectRepository(private val mongoDatabase: MongoDatabase) : Mul
         const val MULTIMEDIAOBJECT_COLLECTION = "multimediaObject"
     }
 
-    override suspend fun insertOne(multimediaObject: MultimediaObject): BsonValue? {
+    override suspend fun insertOne(multimediaObject: MultimediaObject): BsonObjectId? {
         try {
             val result = mongoDatabase.getCollection<MultimediaObject>(MULTIMEDIAOBJECT_COLLECTION).insertOne(
                 multimediaObject
             )
-            return result.insertedId
+            return result.insertedId?.asObjectId()
         } catch (e: MongoException) {
             System.err.println("Unable to insert due to an error: $e")
         }

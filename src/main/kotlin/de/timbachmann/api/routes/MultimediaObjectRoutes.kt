@@ -29,7 +29,10 @@ fun Route.multimediaObjectRouting() {
             post {
                 val newObject = call.receive<MultimediaObjectRequest>()
                 val insertedId = repository.insertOne(newObject.toMultimediaObject())
-                call.respond(HttpStatusCode.Created, "Created multimediaObject with id $insertedId")
+                if (insertedId != null) {
+                    return@post call.respond(HttpStatusCode.Created, insertedId.value.toString())
+                }
+                return@post call.respondText("Server error", status = HttpStatusCode.InternalServerError)
             }
 
             delete("/{id?}") {
@@ -82,11 +85,11 @@ fun Route.multimediaObjectRouting() {
                     it.dispose()
                 }
 
-                path?.let { path ->
+                path?.let { p ->
                     repository.findById(ObjectId(id))?.let { mmObject ->
-                        extractWithCineast(id, mmObject, path)
+                        extractWithCineast(id, mmObject, p)
                     }
-                    call.respondText(path, status = HttpStatusCode.OK)
+                    call.respondText(p, status = HttpStatusCode.OK)
                 } ?: call.respondText("Could not upload file!", status =  HttpStatusCode.InternalServerError)
             }
         }
